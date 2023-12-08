@@ -7,8 +7,9 @@ import { api } from "~/trpc/server";
 export default async function Home() {
   return (
     <>
-      <div>this</div>
-      <Board />
+      <div className="container flex min-h-screen min-w-full items-center justify-center  bg-slate-900">
+        <Board />
+      </div>
     </>
   );
 }

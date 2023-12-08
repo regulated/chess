@@ -1,6 +1,11 @@
 "use client";
 
-import { squareStyle, white, black } from "../../styles/boardStyles";
+import { motion } from "framer-motion";
+import {
+  whiteSquareStyle,
+  blackSquareStyle,
+  boardStyle,
+} from "../../styles/boardStyles";
 
 // import { Console } from "console";
 
@@ -92,7 +97,7 @@ const BoardState: squareType[][] = [
     { square: "D1", piece: "WQ" },
     { square: "E1", piece: "WK" },
     { square: "F1", piece: "WB" },
-    { square: "G1", piece: "WK" },
+    { square: "G1", piece: "WN" },
     { square: "H1", piece: "WR" },
   ],
 ];
@@ -102,21 +107,45 @@ export function Board() {
 
   return (
     <>
-      <div className="grid-rows-8 grid grid-cols-8">
+      <div className={boardStyle}>
         {BoardState.map((r) => {
           white = !white;
           return r.map((s) => {
             white = !white;
             if (white) {
               return (
-                <div className={squareStyle + white}>
-                  {s.square} {s.piece}
+                <div className={whiteSquareStyle}>
+                  <div>{s.square}</div>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    drag={s.piece[0] == "W" || s.piece[0] == "B" ? true : false}
+                    dragSnapToOrigin={true}
+                    onDragEnd={(event, info) =>
+                      console.log(info.point.x, info.point.y)
+                    }
+                  >
+                    {s.piece}
+                  </motion.div>
                 </div>
               );
             } else {
               return (
-                <div className={squareStyle + black}>
-                  {s.square} {s.piece}
+                <div className={blackSquareStyle}>
+                  <div>{s.square}</div>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    drag={s.piece[0] == "W" || s.piece[0] == "B" ? true : false}
+                    dragSnapToOrigin={true}
+                    onDragEnd={(event, info) =>
+                      console.log(info.point.x, info.point.y)
+                    }
+                  >
+                    {s.piece}
+                  </motion.div>
                 </div>
               );
             }
