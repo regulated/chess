@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import {
   whiteSquareStyle,
@@ -104,22 +105,33 @@ const BoardState: squareType[][] = [
 
 export function Board() {
   let white: Boolean = true;
+  const border = useRef(null);
 
   return (
     <>
-      <div className={boardStyle}>
-        {BoardState.map((r) => {
+      <motion.div className={boardStyle} ref={border}>
+        {BoardState.map((r, rkey) => {
           white = !white;
-          return r.map((s) => {
+          return r.map((s, skey) => {
             white = !white;
             if (white) {
               return (
-                <div className={whiteSquareStyle}>
+                <motion.li
+                  key={skey}
+                  className={whiteSquareStyle}
+                  whileHover={{ backgroundColor: "#00ff99" }}
+                >
                   <div>{s.square}</div>
                   <motion.div
-                    whileHover={{
-                      scale: 1.1,
-                    }}
+                    dragConstraints={border}
+                    dragElastic={0}
+                    whileHover={
+                      s.piece[0] == "W" || s.piece[0] == "B"
+                        ? {
+                            scale: 1.1,
+                          }
+                        : { scale: 1.0 }
+                    }
                     drag={s.piece[0] == "W" || s.piece[0] == "B" ? true : false}
                     dragSnapToOrigin={true}
                     onDragEnd={(event, info) =>
@@ -128,16 +140,26 @@ export function Board() {
                   >
                     {s.piece}
                   </motion.div>
-                </div>
+                </motion.li>
               );
             } else {
               return (
-                <div className={blackSquareStyle}>
+                <motion.li
+                  key={skey}
+                  className={blackSquareStyle}
+                  whileHover={{ backgroundColor: "#00ff99" }}
+                >
                   <div>{s.square}</div>
                   <motion.div
-                    whileHover={{
-                      scale: 1.1,
-                    }}
+                    dragConstraints={border}
+                    dragElastic={0}
+                    whileHover={
+                      s.piece[0] == "W" || s.piece[0] == "B"
+                        ? {
+                            scale: 1.1,
+                          }
+                        : { scale: 1.0 }
+                    }
                     drag={s.piece[0] == "W" || s.piece[0] == "B" ? true : false}
                     dragSnapToOrigin={true}
                     onDragEnd={(event, info) =>
@@ -146,12 +168,12 @@ export function Board() {
                   >
                     {s.piece}
                   </motion.div>
-                </div>
+                </motion.li>
               );
             }
           });
         })}
-      </div>
+      </motion.div>
     </>
   );
 }
