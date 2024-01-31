@@ -1,448 +1,134 @@
-import { BoardType, Point } from "./types";
+import { Piece, Squares, Board, Point } from "./types";
 
-export type Action =
-	| { type: "MOVE_PIECE"; payload: { piece: String; point: Point } }
-	| { type: "DRAG_STARTED"; payload: { piece: String } }
-	| { type: "DRAG_MOVED"; payload: { piece: String; point: Point } }
-	| { type: "DRAG_ENDED"; payload: { piece: String } };
-
-export const reducer = (state: BoardType, action: Action) => {
-
-	function setPiecetoSquare(piece: String, square: String) {
-
-		// get the square coords 
-		let x: number = square.charCodeAt(0) - 65;
-		let y: number = square.charCodeAt(1) - 49;
-
-		// check legality of move here? 
-		// do rest or return with error / do nothing 
-
-		// set the state to the new piece
-		state[x][y].piece: String = piece;
-	}
-
-	switch (action.type) {
-		case "MOVE_PIECE": {
-			break;
-		}
-		case "DRAG_STARTED": {
-			break;
-
-		}
-		case "DRAG_MOVED": {
-			break;
-
-		}
-		case "DRAG_ENDED": {
-			break;
-
-		}
-		default:
-			break;
-
-	}
-
+export const initial: Board = {
+  pieces: [],
+  squares: [
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+  ],
+  dragging: undefined,
 };
 
-export const initial: BoardType[][] = [
-	[
-		{
-			square: "A8",
-			piece: "BR",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "B8",
-			piece: "BN",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "C8",
-			piece: "BB",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "D8",
-			piece: "BQ",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "E8",
-			piece: "BK",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "F8",
-			piece: "BB",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "G8",
-			piece: "BN",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "H8",
-			piece: "BR",
-			x: 0,
-			y: 0,
-		},
-	],
-	[
-		{
-			square: "A7",
-			piece: "BP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "B7",
-			piece: "BP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "C7",
-			piece: "BP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "D7",
-			piece: "BP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "E7",
-			piece: "BP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "F7",
-			piece: "BP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "G7",
-			piece: "BP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "H7",
-			piece: "BP",
-			x: 0,
-			y: 0,
-		},
-	],
-	[
-		{
-			square: "A6",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "B6",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "C6",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "D6",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "E6",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "F6",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "G6",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "H6",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-	],
-	[
-		{
-			square: "A5",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "B5",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "C5",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "D5",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "E5",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "F5",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "G5",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "H5",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-	],
-	[
-		{
-			square: "A4",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "B4",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "C4",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "D4",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "E4",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "F4",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "G4",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "H4",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-	],
-	[
-		{
-			square: "A3",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "B3",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "C3",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "D3",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "E3",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "F3",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "G3",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "H3",
-			piece: "00",
-			x: 0,
-			y: 0,
-		},
-	],
-	[
-		{
-			square: "A2",
-			piece: "WP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "B2",
-			piece: "WP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "C2",
-			piece: "WP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "D2",
-			piece: "WP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "E2",
-			piece: "WP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "F2",
-			piece: "WP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "G2",
-			piece: "WP",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "H2",
-			piece: "WP",
-			x: 0,
-			y: 0,
-		},
-	],
-	[
-		{
-			square: "A1",
-			piece: "WR",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "B1",
-			piece: "WN",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "C1",
-			piece: "WB",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "D1",
-			piece: "WQ",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "E1",
-			piece: "WK",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "F1",
-			piece: "WB",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "G1",
-			piece: "WN",
-			x: 0,
-			y: 0,
-		},
-		{
-			square: "H1",
-			piece: "WR",
-			x: 0,
-			y: 0,
-		},
-	],
-];
+export type Action =
+  | { type: "ADD_PIECE"; payload: { piece: Piece } }
+  | { type: "MOVE_PIECE"; payload: { piece: Piece; point: Point } }
+  | { type: "DRAG_STARTED"; payload: { piece: Piece } }
+  | { type: "DRAG_MOVED"; payload: { piece: Piece; point: Point } }
+  | { type: "DRAG_ENDED"; payload: { piece: Piece } }
+  | { type: "ANIMATION_ENDED" };
+
+export const reducer = (state: Board, action: Action) => {
+  function clearPieceFromSquare(piece: Piece, squares: Squares) {
+    const next = [...squares];
+    next[piece.y][piece.x] = "";
+    return next;
+  }
+
+  function setPieceToSquare(piece: Piece, squares: Squares) {
+    const next = [...squares];
+    next[piece.y][piece.x] = piece.name;
+    return next;
+  }
+
+  function isValid(piece: Piece, point: Point, squares: Squares) {
+    // for now, just check if it is in bounds and then do other rules later
+    // can check for promotion here as well
+    console.log("Checking isValid for point: " + point);
+    return true;
+    // if (point.x >= 0 && point.x <= 7 && point.y >= 0 && point.y <= 7) {
+    //   return true;
+    // }
+    // return false;
+  }
+
+  switch (action.type) {
+    case "ADD_PIECE": {
+      const nextState = { ...state };
+      const { piece } = action.payload;
+
+      nextState.pieces.push(piece);
+
+      nextState.squares = setPieceToSquare(piece, nextState.squares);
+
+      return nextState;
+    }
+    case "MOVE_PIECE": {
+      const nextState = { ...state };
+      const { piece, point } = action.payload;
+
+      nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+
+      piece.x = point.x;
+      piece.y = point.y;
+
+      nextState.squares = setPieceToSquare(piece, nextState.squares);
+
+      return nextState;
+    }
+    case "DRAG_STARTED": {
+      const nextState = { ...state };
+      const { piece } = action.payload;
+      const { x, y } = piece;
+
+      nextState.dragging = {
+        id: piece.id,
+        initialPoint: { x, y },
+        nextPoint: { x, y },
+        valid: true,
+      };
+
+      return nextState;
+    }
+    case "DRAG_MOVED": {
+      const nextState = { ...state };
+      const { piece, point } = action.payload;
+
+      if (nextState.dragging) {
+        nextState.dragging.nextPoint = point;
+
+        nextState.dragging.valid = isValid(piece, point, nextState.squares);
+      }
+
+      return nextState;
+    }
+    case "DRAG_ENDED": {
+      const nextState = { ...state };
+      const { piece } = action.payload;
+
+      if (nextState.dragging) {
+        const { valid, initialPoint, nextPoint } = nextState.dragging;
+        const point = valid ? nextPoint : initialPoint;
+
+        nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+
+        piece.x = point.x;
+        piece.y = point.y;
+
+        nextState.squares = setPieceToSquare(piece, nextState.squares);
+
+        const index = nextState.pieces.findIndex((i) => i.id === piece.id);
+        nextState.pieces[index] = piece;
+
+        return nextState;
+      }
+
+      return nextState;
+    }
+    case "ANIMATION_ENDED": {
+      const nextState = { ...state };
+
+      nextState.dragging = undefined;
+
+      return nextState;
+    }
+    default: {
+      return state;
+    }
+  }
+};
