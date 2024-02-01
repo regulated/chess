@@ -32,7 +32,7 @@ export const reducer = (state: Board, action: Action) => {
 
   function setPieceToSquare(piece: Piece, squares: Squares) {
     const next = [...squares];
-    next[piece.y][piece.x] = piece.name;
+    next[piece.y][piece.x] = piece.id;
     return next;
   }
 
@@ -52,7 +52,10 @@ export const reducer = (state: Board, action: Action) => {
       const nextState = { ...state };
       const { piece } = action.payload;
 
-      nextState.pieces.push(piece);
+      // attempting to stop duplicates (working!)
+      if (nextState.pieces.find((p) => p.id === piece.id) === undefined) {
+        nextState.pieces.push(piece);
+      }
 
       nextState.squares = setPieceToSquare(piece, nextState.squares);
 

@@ -15,19 +15,26 @@ export function Board() {
   const [state, dispatch] = useReducer(reducer, initial);
 
   // (view width / 2) - (48 * 4) should be coords of left of board
-  const screenSize = useScreenSize();
+
+  let count = 0;
 
   useEffect(() => {
-    dispatch({
-      type: "ADD_PIECE",
-      payload: { piece: { id: 1, name: "br", x: 0, y: 0 } },
-    });
-    dispatch({
-      type: "ADD_PIECE",
-      payload: { piece: { id: 2, name: "wk", x: 4, y: 7 } },
-    });
+    console.log(count);
+    if (count == 0) {
+      console.log("inside count: " + count);
+      dispatch({
+        type: "ADD_PIECE",
+        payload: { piece: { id: "br", name: "br", x: 0, y: 0 } },
+      });
+      dispatch({
+        type: "ADD_PIECE",
+        payload: { piece: { id: "wk", name: "wk", x: 4, y: 7 } },
+      });
+    }
+    count++;
   }, []);
 
+  //const screenSize = useScreenSize();
   // const border = useRef(null);
 
   const draggingPiece = state.pieces.find((p) => p.id === state.dragging?.id);
@@ -61,12 +68,12 @@ export function Board() {
                 backgroundColor: "rgba(239, 239, 239,.8)",
                 x:
                   state.dragging.initialPoint.x * 48 +
-                  screenSize.width / 2 -
-                  192,
+                  0 /*screenSize.width / 2 -
+                  192*/,
                 y:
                   state.dragging.initialPoint.y * 48 +
-                  screenSize.height / 2 -
-                  192,
+                  0 /*screenSize.height / 2 -
+                  192*/,
               }}
             />
             <motion.div
@@ -80,19 +87,19 @@ export function Board() {
                   : "rgb(224, 109, 118)",
                 x:
                   state.dragging.initialPoint.x * 48 +
-                  screenSize.width / 2 -
-                  192,
+                  0 /*screenSize.width / 2 -
+                  192*/,
                 y:
                   state.dragging.initialPoint.y * 48 +
-                  screenSize.height / 2 -
-                  192,
+                  0 /*screenSize.height / 2 -
+                  192*/,
               }}
             />
           </>
         )}
         {state.pieces.map((piece) => {
-          const x = piece.x * 48 + screenSize.width / 2 - 192;
-          const y = piece.y * 48 + screenSize.height / 2 - 192;
+          const x = piece.x * 48; // + screenSize.width / 2 - 192;
+          const y = piece.y * 48; // + screenSize.height / 2 - 192;
           const isDragging = piece.id === state.dragging?.id;
           return (
             <motion.div
@@ -110,7 +117,8 @@ export function Board() {
                   x: Math.min(
                     Math.max(
                       Math.round(
-                        (x + info.point.x - (screenSize.width / 2 - 192)) / 48,
+                        (x + info.point.x) /*- (screenSize.width / 2 - 192)*/ /
+                          48,
                       ),
                       0,
                     ),
@@ -119,16 +127,17 @@ export function Board() {
                   y: Math.min(
                     Math.max(
                       Math.round(
-                        (y + info.point.y + (screenSize.height / 2 - 192)) / 48,
+                        (y + info.point.y) /*+ (screenSize.height / 2 - 192)*/ /
+                          48,
                       ),
                       0,
                     ),
                     7,
                   ),
                 };
-                console.log(screenSize);
-                console.log(point);
-                console.log(info.point);
+                // console.log(screenSize);
+                // console.log(point);
+                // console.log(info.point);
 
                 if (state.dragging) {
                   const { nextPoint } = state.dragging;
@@ -148,10 +157,10 @@ export function Board() {
                 top: y,
                 left: x,
                 border: "1px solid #000",
-                backgroundColor: "#efefef",
+                backgroundColor: "#3f3f3f",
                 fontSize: 10,
                 textAlign: "center",
-                padding: "12px 12px",
+                padding: "2px 2px",
                 zIndex: isDragging ? 99 : 1,
               }}
             >

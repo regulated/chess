@@ -1,5 +1,5 @@
 export interface Piece {
-  id: number; // numbers starting at 1
+  id: string; // same as name for now, can have other identifiers later
   name: string; // br wk 00 etc
   x: number; // 0-7 column
   y: number; // 0-7 row
@@ -12,7 +12,7 @@ export type Board = {
   pieces: Piece[];
   squares: string[][];
   dragging?: {
-    id: number;
+    id: string;
     initialPoint: Point;
     nextPoint: Point;
     valid: boolean;
