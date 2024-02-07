@@ -1,16 +1,16 @@
 export const whiteSquareStyle =
-  "flex justify-center items-center bg-slate-900 h-12 w-12";
+  "flex justify-center items-center bg-slate-900 h-6 w-6";
 export const blackSquareStyle =
-  "flex justify-center items-center bg-slate-950 h-12 w-12";
+  "flex justify-center items-center bg-slate-950 h-6 w-6";
 export const boardStyle =
-  "absolute top-0 left-0 grid-rows-8 grid grid-cols-8 h-96 w-96";
+  "absolute top-0 left-0 grid-rows-8 grid grid-cols-8 h-24 w-24";
 export const wrapper =
-  "container relative flex items-center justify-center w-screen h-screen";
-export const pieceStyle = "h-12 w-12";
+  "relative overflow-hidden flex items-center justify-center w-screen h-screen";
+export const pieceStyle = "h-6 w-6";
 
 /*
- * h-12 = 3rem or 48px
- * h-96 = 24rem or 384px
+ * 6 = 48px
+ * 24 = 384px
  * bg-slate-200
  * bg-amber-600
  * */

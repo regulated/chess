@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useEffect, useRef } from "react";
+import { useReducer, useEffect /*, useRef*/ } from "react";
 import { motion } from "framer-motion";
 import {
   whiteSquareStyle,
@@ -9,33 +9,33 @@ import {
   wrapper,
 } from "../../styles/boardStyles";
 import { reducer, initial } from "./reducer";
-import useScreenSize from "./useScreenSize";
+// import useScreenSize from "./useScreenSize";
 
 export function Board() {
   const [state, dispatch] = useReducer(reducer, initial);
 
   // (view width / 2) - (48 * 4) should be coords of left of board
 
-  let count = 0;
-
   useEffect(() => {
-    console.log(count);
-    if (count == 0) {
-      console.log("inside count: " + count);
-      dispatch({
-        type: "ADD_PIECE",
-        payload: { piece: { id: "br", name: "br", x: 0, y: 0 } },
-      });
-      dispatch({
-        type: "ADD_PIECE",
-        payload: { piece: { id: "wk", name: "wk", x: 4, y: 7 } },
-      });
-    }
-    count++;
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: { id: "br", name: "br", x: 0, y: 0, xOffset: 0, yOffset: 0 },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: { id: "bp", name: "bp", x: 3, y: 1, xOffset: 0, yOffset: 0 },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: { id: "wk", name: "wk", x: 4, y: 7, xOffset: 0, yOffset: 0 },
+      },
+    });
   }, []);
-
-  //const screenSize = useScreenSize();
-  // const border = useRef(null);
 
   const draggingPiece = state.pieces.find((p) => p.id === state.dragging?.id);
 
@@ -66,14 +66,10 @@ export function Board() {
                 top: 0,
                 left: 0,
                 backgroundColor: "rgba(239, 239, 239,.8)",
-                x:
-                  state.dragging.initialPoint.x * 48 +
-                  0 /*screenSize.width / 2 -
-                  192*/,
-                y:
-                  state.dragging.initialPoint.y * 48 +
-                  0 /*screenSize.height / 2 -
-                  192*/,
+                x: state.dragging.initialPoint.x * 48,
+                y: state.dragging.initialPoint.y * 48,
+                width: 48,
+                height: 48,
               }}
             />
             <motion.div
@@ -85,59 +81,48 @@ export function Board() {
                 backgroundColor: state.dragging.valid
                   ? "rgb(152, 195, 121)"
                   : "rgb(224, 109, 118)",
-                x:
-                  state.dragging.initialPoint.x * 48 +
-                  0 /*screenSize.width / 2 -
-                  192*/,
-                y:
-                  state.dragging.initialPoint.y * 48 +
-                  0 /*screenSize.height / 2 -
-                  192*/,
+                x: state.dragging.nextPoint.x * 48,
+                y: state.dragging.nextPoint.y * 48,
+                width: 48,
+                height: 48,
               }}
             />
           </>
         )}
         {state.pieces.map((piece) => {
-          const x = piece.x * 48; // + screenSize.width / 2 - 192;
-          const y = piece.y * 48; // + screenSize.height / 2 - 192;
+          console.log(piece.xOffset + " " + piece.yOffset);
+          const x = piece.x * 48 - piece.xOffset;
+          const y = piece.y * 48 - piece.yOffset;
           const isDragging = piece.id === state.dragging?.id;
           return (
             <motion.div
               key={piece.id}
               drag
               dragMomentum={false}
+              whileHover={{ scale: 1.1 }}
               onDragStart={() =>
                 dispatch({ type: "DRAG_STARTED", payload: { piece } })
               }
-              onDragEnd={() =>
-                dispatch({ type: "DRAG_ENDED", payload: { piece } })
-              }
+              onDragEnd={(_, info) => {
+                const offset = {
+                  x: info.offset.x,
+                  y: info.offset.y,
+                };
+                dispatch({ type: "DRAG_ENDED", payload: { piece, offset } });
+              }}
               onDrag={(_, info) => {
                 const point = {
                   x: Math.min(
-                    Math.max(
-                      Math.round(
-                        (x + info.point.x) /*- (screenSize.width / 2 - 192)*/ /
-                          48,
-                      ),
-                      0,
-                    ),
+                    Math.max(Math.round((info.point.x - 24) / 48), 0),
                     7,
                   ),
                   y: Math.min(
-                    Math.max(
-                      Math.round(
-                        (y + info.point.y) /*+ (screenSize.height / 2 - 192)*/ /
-                          48,
-                      ),
-                      0,
-                    ),
+                    Math.max(Math.round((info.point.y - 24) / 48), 0),
                     7,
                   ),
                 };
-                // console.log(screenSize);
-                // console.log(point);
-                // console.log(info.point);
+                console.log(info.point);
+                console.log(info.offset);
 
                 if (state.dragging) {
                   const { nextPoint } = state.dragging;
@@ -148,19 +133,23 @@ export function Board() {
                     });
                   }
                 }
+                console.log(piece.xOffset + " " + piece.yOffset);
               }}
               onAnimationComplete={() => dispatch({ type: "ANIMATION_ENDED" })}
+              //dragSnapToOrigin={true}
+              //transition={{ duration: 0, type: "tween" }}
               initial={false}
               animate={!isDragging}
               style={{
                 position: "absolute",
                 top: y,
                 left: x,
-                border: "1px solid #000",
+                border: "2px solid #000",
                 backgroundColor: "#3f3f3f",
                 fontSize: 10,
                 textAlign: "center",
-                padding: "2px 2px",
+                height: 48,
+                width: 48,
                 zIndex: isDragging ? 99 : 1,
               }}
             >
