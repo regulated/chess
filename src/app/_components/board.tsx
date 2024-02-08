@@ -9,7 +9,8 @@ import {
   wrapper,
 } from "../../styles/boardStyles";
 import { reducer, initial } from "./reducer";
-// import useScreenSize from "./useScreenSize";
+import Image from "next/image";
+// import { bk } from "../../../public";
 
 export function Board() {
   const [state, dispatch] = useReducer(reducer, initial);
@@ -35,7 +36,147 @@ export function Board() {
       type: "ADD_PIECE",
       payload: {
         piece: {
-          id: "bp4",
+          id: "bn0",
+          name: "bn",
+          x: 1,
+          y: 0,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bb0",
+          name: "bb",
+          x: 2,
+          y: 0,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bq0",
+          name: "bq",
+          x: 3,
+          y: 0,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bk0",
+          name: "bk",
+          x: 4,
+          y: 0,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bb1",
+          name: "bb",
+          x: 5,
+          y: 0,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bn1",
+          name: "bn",
+          x: 6,
+          y: 0,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "br1",
+          name: "br",
+          x: 7,
+          y: 0,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bp0",
+          name: "bp",
+          x: 0,
+          y: 1,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bp1",
+          name: "bp",
+          x: 1,
+          y: 1,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bp2",
+          name: "bp",
+          x: 2,
+          y: 1,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bp3",
           name: "bp",
           x: 3,
           y: 1,
@@ -49,7 +190,105 @@ export function Board() {
       type: "ADD_PIECE",
       payload: {
         piece: {
-          id: "wp4",
+          id: "bp4",
+          name: "bp",
+          x: 4,
+          y: 1,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bp5",
+          name: "bp",
+          x: 5,
+          y: 1,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bp6",
+          name: "bp",
+          x: 6,
+          y: 1,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "bp7",
+          name: "bp",
+          x: 7,
+          y: 1,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wp0",
+          name: "wp",
+          x: 0,
+          y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wp1",
+          name: "wp",
+          x: 1,
+          y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wp2",
+          name: "wp",
+          x: 2,
+          y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wp3",
           name: "wp",
           x: 3,
           y: 6,
@@ -63,10 +302,164 @@ export function Board() {
       type: "ADD_PIECE",
       payload: {
         piece: {
-          id: "wp5",
+          id: "wp4",
           name: "wp",
           x: 4,
           y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wp5",
+          name: "wp",
+          x: 5,
+          y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wp6",
+          name: "wp",
+          x: 6,
+          y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wp7",
+          name: "wp",
+          x: 7,
+          y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wr0",
+          name: "wr",
+          x: 0,
+          y: 7,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wn0",
+          name: "wn",
+          x: 1,
+          y: 7,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wb0",
+          name: "wb",
+          x: 2,
+          y: 7,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wq0",
+          name: "wq",
+          x: 3,
+          y: 7,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wk0",
+          name: "wk",
+          x: 4,
+          y: 7,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wb1",
+          name: "wb",
+          x: 5,
+          y: 7,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wn1",
+          name: "wn",
+          x: 6,
+          y: 7,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wr1",
+          name: "wr",
+          x: 7,
+          y: 7,
           xOffset: 0,
           yOffset: 0,
           moved: false,
@@ -108,6 +501,7 @@ export function Board() {
                 y: state.dragging.initialPoint.y * 48,
                 width: 48,
                 height: 48,
+                borderRadius: "6px",
               }}
             />
             <motion.div
@@ -123,16 +517,18 @@ export function Board() {
                 y: state.dragging.nextPoint.y * 48,
                 width: 48,
                 height: 48,
+                borderRadius: "6px",
               }}
             />
           </>
         )}
         {state.pieces.map((piece) => {
-          const x = piece.x * 48 - piece.xOffset + 6;
-          const y = piece.y * 48 - piece.yOffset + 6;
+          const x = piece.x * 48 - piece.xOffset; // + 6;
+          const y = piece.y * 48 - piece.yOffset; // + 6;
           const isDragging = piece.id === state.dragging?.id;
           return (
-            <motion.div
+            <motion.img
+              src={piece.name == "bk" ? `/${piece.name}.png` : "/bk.png"}
               key={piece.id}
               drag
               dragMomentum={false}
@@ -170,102 +566,29 @@ export function Board() {
                 }
               }}
               onAnimationComplete={() => dispatch({ type: "ANIMATION_ENDED" })}
-              //dragSnapToOrigin={true}
-              //transition={{ duration: 0, type: "tween" }}
               initial={false}
               animate={!isDragging}
               style={{
                 position: "absolute",
                 top: y,
                 left: x,
-                border: "2px solid #000",
-                backgroundColor: "#3f3f3f",
-                fontSize: 12,
-                textAlign: "center",
-                height: 36,
-                width: 36,
+                //border: "2px solid #000",
+                //backgroundColor: "#3f3f3f",
+                // fontSize: 12,
+                // textAlign: "center",
+                height: 48,
+                width: 48,
                 zIndex: isDragging ? 99 : 1,
+                borderRadius: "6px",
               }}
             >
-              {piece.name}
-            </motion.div>
+              {
+                //<Image src="/bk.png" width={24} height={24} alt="Black King" />
+              }
+            </motion.img>
           );
         })}
       </div>
     </>
   );
-
-  /*
-	return (
-		<>
-			<motion.div className={boardStyle} ref={border}>
-				{boardState.squares.map((r: string[], rkey: number) => {
-					return r.map((s: string, skey: number) => {
-						if (s == "w") {
-							return (
-								<motion.li
-									key={skey}
-									className={whiteSquareStyle}
-									whileHover={{ backgroundColor: "#00dd00" }}
-								>
-									<div>{s.square}</div>
-									<motion.div
-										dragConstraints={border}
-										dragElastic={0}
-										whileHover={
-											s.piece.id[0] == "w" || s.piece.id[0] == "b"
-												? {
-														scale: 1.1,
-													}
-												: { scale: 1.0 }
-										}
-										drag={
-											s.piece.id[0] == "w" || s.piece.id[0] == "b"
-												? true
-												: false
-										}
-										dragSnapToOrigin={true}
-										onDragEnd={(event, info) =>
-											console.log(info.point.x, info.point.y)
-										}
-									>
-										{s.piece}
-									</motion.div>
-								</motion.li>
-							);
-						} else {
-							return (
-								<motion.li
-									key={skey}
-									className={blackSquareStyle}
-									whileHover={{ backgroundColor: "#00dd00" }}
-								>
-									<div>{s.square}</div>
-									<motion.div
-										dragConstraints={border}
-										dragElastic={0}
-										whileHover={
-											s.piece[0] == "w" || s.piece[0] == "b"
-												? {
-														scale: 1.1,
-													}
-												: { scale: 1.0 }
-										}
-										drag={s.piece[0] == "w" || s.piece[0] == "b" ? true : false}
-										dragSnapToOrigin={true}
-										onDragEnd={(event, info) =>
-											console.log(info.point.x, info.point.y)
-										}
-									>
-										{s.piece}
-									</motion.div>
-								</motion.li>
-							);
-						}
-					});
-				})}
-			</motion.div>
-		</>
-	);
-		*/
 }
