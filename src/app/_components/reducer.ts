@@ -42,8 +42,12 @@ export const reducer = (state: Board, action: Action) => {
   function isValid(piece: Piece, point: Point, squares: Squares) {
     // for now, just check if it is in bounds and then do other rules later
     // can check for promotion here as well
-    if (squares[point.y][point.x] !== "") return false;
+
+    if (squares[point.y][point.x] !== "") {
+      return false;
+    }
     return true;
+
     // need to add logic to send the piece back to its original square
   }
 
@@ -78,6 +82,8 @@ export const reducer = (state: Board, action: Action) => {
       const { piece } = action.payload;
       const { x, y } = piece;
 
+      piece.moved = false;
+
       nextState.dragging = {
         id: piece.id,
         initialPoint: { x, y },
@@ -100,8 +106,6 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "DRAG_ENDED": {
-      // this is also being called twice but the point is the same on both calls
-      // so where is the double move coming from?
       const nextState = { ...state };
       const { piece, offset } = action.payload;
 
@@ -109,16 +113,33 @@ export const reducer = (state: Board, action: Action) => {
         const { valid, initialPoint, nextPoint } = nextState.dragging;
         const point = valid ? nextPoint : initialPoint;
 
+        console.log(valid);
+        console.log(piece.moved);
+        console.log(point);
+        console.log(initialPoint);
+
         // to cancel out double call
-        if (point.x === piece.x && point.y === piece.y) return nextState;
+        if (piece.moved) return nextState;
+
+        if (!valid) {
+          piece.x = point.x;
+          piece.y = point.y;
+          piece.xOffset += offset.x;
+          piece.yOffset += offset.y;
+          piece.moved = true;
+          const index = nextState.pieces.findIndex((i) => i.id === piece.id);
+          nextState.pieces[index] = piece;
+          return nextState;
+        }
 
         nextState.squares = clearPieceFromSquare(piece, nextState.squares);
 
         piece.x = point.x;
         piece.y = point.y;
+        piece.xOffset += offset.x;
+        piece.yOffset += offset.y;
 
-        piece.xOffset += valid ? offset.x : 0;
-        piece.yOffset += valid ? offset.y : 0;
+        piece.moved = true;
 
         nextState.squares = setPieceToSquare(piece, nextState.squares);
 

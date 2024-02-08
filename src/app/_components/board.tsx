@@ -20,19 +20,57 @@ export function Board() {
     dispatch({
       type: "ADD_PIECE",
       payload: {
-        piece: { id: "br", name: "br", x: 0, y: 0, xOffset: 0, yOffset: 0 },
+        piece: {
+          id: "br0",
+          name: "br",
+          x: 0,
+          y: 0,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
       },
     });
     dispatch({
       type: "ADD_PIECE",
       payload: {
-        piece: { id: "bp", name: "bp", x: 3, y: 1, xOffset: 0, yOffset: 0 },
+        piece: {
+          id: "bp4",
+          name: "bp",
+          x: 3,
+          y: 1,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
       },
     });
     dispatch({
       type: "ADD_PIECE",
       payload: {
-        piece: { id: "wk", name: "wk", x: 4, y: 7, xOffset: 0, yOffset: 0 },
+        piece: {
+          id: "wp4",
+          name: "wp",
+          x: 3,
+          y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
+      },
+    });
+    dispatch({
+      type: "ADD_PIECE",
+      payload: {
+        piece: {
+          id: "wp5",
+          name: "wp",
+          x: 4,
+          y: 6,
+          xOffset: 0,
+          yOffset: 0,
+          moved: false,
+        },
       },
     });
   }, []);
@@ -142,7 +180,7 @@ export function Board() {
                 left: x,
                 border: "2px solid #000",
                 backgroundColor: "#3f3f3f",
-                fontSize: 10,
+                fontSize: 12,
                 textAlign: "center",
                 height: 36,
                 width: 36,
