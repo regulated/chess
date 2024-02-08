@@ -528,7 +528,7 @@ export function Board() {
           const isDragging = piece.id === state.dragging?.id;
           return (
             <motion.img
-              src={piece.name == "bk" ? `/${piece.name}.png` : "/bk.png"}
+              src={`/${piece.name}.png`}
               key={piece.id}
               drag
               dragMomentum={false}

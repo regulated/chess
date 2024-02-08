@@ -40,15 +40,28 @@ export const reducer = (state: Board, action: Action) => {
   }
 
   function isValid(piece: Piece, point: Point, squares: Squares) {
-    // for now, just check if it is in bounds and then do other rules later
-    // can check for promotion here as well
-
     if (squares[point.y][point.x] !== "") {
       return false;
     }
-    return true;
 
-    // need to add logic to send the piece back to its original square
+    switch (piece.name) {
+      case "br":
+      case "wr":
+        if (piece.x === point.x || piece.y === point.y) return true;
+        else return false;
+      case "bb":
+      case "wb":
+        if (piece.x) return true;
+        else return false;
+      case "wp":
+        if (piece.x === point.x && piece.y - 1 === point.y) return true;
+        else return false;
+      case "bp":
+        if (piece.x === point.x && piece.y + 1 === point.y) return true;
+        else return false;
+    }
+
+    return true;
   }
 
   switch (action.type) {
