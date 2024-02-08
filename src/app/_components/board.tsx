@@ -90,9 +90,8 @@ export function Board() {
           </>
         )}
         {state.pieces.map((piece) => {
-          console.log(piece.xOffset + " " + piece.yOffset);
-          const x = piece.x * 48 - piece.xOffset;
-          const y = piece.y * 48 - piece.yOffset;
+          const x = piece.x * 48 - piece.xOffset + 6;
+          const y = piece.y * 48 - piece.yOffset + 6;
           const isDragging = piece.id === state.dragging?.id;
           return (
             <motion.div
@@ -121,8 +120,6 @@ export function Board() {
                     7,
                   ),
                 };
-                console.log(info.point);
-                console.log(info.offset);
 
                 if (state.dragging) {
                   const { nextPoint } = state.dragging;
@@ -133,7 +130,6 @@ export function Board() {
                     });
                   }
                 }
-                console.log(piece.xOffset + " " + piece.yOffset);
               }}
               onAnimationComplete={() => dispatch({ type: "ANIMATION_ENDED" })}
               //dragSnapToOrigin={true}
@@ -148,8 +144,8 @@ export function Board() {
                 backgroundColor: "#3f3f3f",
                 fontSize: 10,
                 textAlign: "center",
-                height: 48,
-                width: 48,
+                height: 36,
+                width: 36,
                 zIndex: isDragging ? 99 : 1,
               }}
             >

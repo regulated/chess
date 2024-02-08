@@ -42,12 +42,9 @@ export const reducer = (state: Board, action: Action) => {
   function isValid(piece: Piece, point: Point, squares: Squares) {
     // for now, just check if it is in bounds and then do other rules later
     // can check for promotion here as well
-    // console.log("Checking isValid for point: " + point);
+    if (squares[point.y][point.x] !== "") return false;
     return true;
-    // if (point.x >= 0 && point.x <= 7 && point.y >= 0 && point.y <= 7) {
-    //   return true;
-    // }
-    // return false;
+    // need to add logic to send the piece back to its original square
   }
 
   switch (action.type) {
@@ -116,15 +113,12 @@ export const reducer = (state: Board, action: Action) => {
         if (point.x === piece.x && point.y === piece.y) return nextState;
 
         nextState.squares = clearPieceFromSquare(piece, nextState.squares);
-        console.log("DRAG_ENDED Piece " + piece.x + " " + piece.y);
-        console.log("DRAG_ENDED Point " + point.x + " " + point.y);
 
         piece.x = point.x;
         piece.y = point.y;
 
-        console.log(offset);
-        piece.xOffset = offset.x;
-        piece.yOffset = offset.y;
+        piece.xOffset += valid ? offset.x : 0;
+        piece.yOffset += valid ? offset.y : 0;
 
         nextState.squares = setPieceToSquare(piece, nextState.squares);
 
