@@ -483,7 +483,7 @@ export function Board() {
                   }`}
                   key={`${y}_${x}`}
                 >
-                  {square}
+                  {x + " " + y}
                 </div>
               );
             });
@@ -579,13 +579,8 @@ export function Board() {
                 height: 48,
                 width: 48,
                 zIndex: isDragging ? 99 : 1,
-                borderRadius: "6px",
               }}
-            >
-              {
-                //<Image src="/bk.png" width={24} height={24} alt="Black King" />
-              }
-            </motion.img>
+            ></motion.img>
           );
         })}
       </div>
