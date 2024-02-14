@@ -13,6 +13,7 @@ export const initial: Board = {
     ["", "", "", "", "", "", "", ""],
   ],
   dragging: undefined,
+  whiteTurn: true,
 };
 
 export type Action =
@@ -41,6 +42,7 @@ export const reducer = (state: Board, action: Action) => {
 
   function isValid(piece: Piece, point: Point, squares: Squares) {
     /*
+     * check that it is the right side's turn
      * check that the piece moved
      * check that move is in bounds of piece type and board
      * check that there isn't a piece in the way
@@ -53,7 +55,17 @@ export const reducer = (state: Board, action: Action) => {
 
     let valid: boolean = false;
 
-    if (piece.x === point.x && piece.y === point.y) return valid;
+    // console.log(state.whiteTurn + " " + piece.name.charAt(0));
+    // if (
+    //   (state.whiteTurn && piece.name.charAt(0) === "b") ||
+    //   (!state.whiteTurn && piece.name.charAt(0) === "w")
+    // ) {
+    //   return false;
+    // }
+
+    if (piece.x === point.x && piece.y === point.y) {
+      return valid;
+    }
 
     // Consider doing this one square at a time for non-knight pieces instead of
     // calculating final valid square and in between issues.
@@ -62,20 +74,61 @@ export const reducer = (state: Board, action: Action) => {
     switch (piece.name) {
       case "br":
       case "wr":
-        if (piece.x === point.x || piece.y === point.y) valid = true;
+        if (piece.x === point.x || piece.y === point.y) {
+          if (piece.x < point.x) {
+            for (let i = piece.x + 1; i < point.x; i++) {
+              if (squares[piece.y][i] !== "") return false;
+            }
+          }
+          if (piece.y < point.y) {
+            for (let i = piece.y + 1; i < point.y; i++) {
+              if (squares[i][piece.x] !== "") return false;
+            }
+          }
+          if (piece.x > point.x) {
+            for (let i = point.x + 1; i < piece.x; i++) {
+              if (squares[piece.y][i] !== "") return false;
+            }
+          }
+          if (piece.y > point.y) {
+            for (let i = point.y + 1; i < piece.y; i++) {
+              if (squares[i][piece.x] !== "") return false;
+            }
+          }
+          valid = true;
+        }
+
         break;
       case "bb":
       case "wb":
-        if (squares[point.y][point.x].charAt(0) !== piece.name.charAt(0))
+        if (Math.abs(piece.x - point.x) === Math.abs(piece.y - point.y)) {
+          if (piece.x < point.x && piece.y < point.y) {
+            for (let i = 1; i < Math.abs(point.y - piece.y); i++) {
+              if (squares[piece.y + i][piece.x + i].charAt(0) !== "")
+                return false;
+            }
+          }
+          if (piece.x < point.x && piece.y > point.y) {
+            for (let i = 1; i < Math.abs(point.y - piece.y); i++) {
+              if (squares[piece.y - i][piece.x + i].charAt(0) !== "")
+                return false;
+            }
+          }
+          if (piece.x > point.x && piece.y < point.y) {
+            for (let i = 1; i < Math.abs(point.y - piece.y); i++) {
+              if (squares[piece.y + i][piece.x - i].charAt(0) !== "")
+                return false;
+            }
+          }
+          if (piece.x > point.x && piece.y > point.y) {
+            for (let i = 1; i < Math.abs(point.y - piece.y); i++) {
+              if (squares[piece.y - i][piece.x - i].charAt(0) !== "")
+                return false;
+            }
+          }
           valid = true;
+        }
 
-        // breaking the whole system I think
-        // while (tempX !== point.x || tempY !== point.y) {
-        //   point.x > tempX ? tempX++ : tempX--;
-        //   point.y > tempY ? tempY++ : tempY--;
-        //   if (tempX > 7 || tempX < 0 || tempY > 7 || tempY < 0) return false;
-        //   if (squares[tempY][tempX].charAt(0) !== "w") valid = false;
-        // }
         break;
 
       case "bn":
@@ -90,7 +143,57 @@ export const reducer = (state: Board, action: Action) => {
         break;
       case "bq":
       case "wq":
-        if (piece.x) valid = true;
+        if (piece.x === point.x || piece.y === point.y) {
+          if (piece.x < point.x) {
+            for (let i = piece.x + 1; i < point.x; i++) {
+              if (squares[piece.y][i] !== "") return false;
+            }
+          }
+          if (piece.y < point.y) {
+            for (let i = piece.y + 1; i < point.y; i++) {
+              if (squares[i][piece.x] !== "") return false;
+            }
+          }
+          if (piece.x > point.x) {
+            for (let i = point.x + 1; i < piece.x; i++) {
+              if (squares[piece.y][i] !== "") return false;
+            }
+          }
+          if (piece.y > point.y) {
+            for (let i = point.y + 1; i < piece.y; i++) {
+              if (squares[i][piece.x] !== "") return false;
+            }
+          }
+          valid = true;
+        } else if (
+          Math.abs(piece.x - point.x) === Math.abs(piece.y - point.y)
+        ) {
+          if (piece.x < point.x && piece.y < point.y) {
+            for (let i = 1; i < Math.abs(point.y - piece.y); i++) {
+              if (squares[piece.y + i][piece.x + i].charAt(0) !== "")
+                return false;
+            }
+          }
+          if (piece.x < point.x && piece.y > point.y) {
+            for (let i = 1; i < Math.abs(point.y - piece.y); i++) {
+              if (squares[piece.y - i][piece.x + i].charAt(0) !== "")
+                return false;
+            }
+          }
+          if (piece.x > point.x && piece.y < point.y) {
+            for (let i = 1; i < Math.abs(point.y - piece.y); i++) {
+              if (squares[piece.y + i][piece.x - i].charAt(0) !== "")
+                return false;
+            }
+          }
+          if (piece.x > point.x && piece.y > point.y) {
+            for (let i = 1; i < Math.abs(point.y - piece.y); i++) {
+              if (squares[piece.y - i][piece.x - i].charAt(0) !== "")
+                return false;
+            }
+          }
+          valid = true;
+        }
         break;
       case "bk":
       case "wk":
@@ -107,6 +210,10 @@ export const reducer = (state: Board, action: Action) => {
         if (piece.x === point.x && piece.y + 1 === point.y) valid = true;
         break;
     }
+
+    if (valid && squares[point.y][point.x].charAt(0) !== piece.name.charAt(0))
+      valid = true;
+    else valid = false;
 
     return valid;
   }
@@ -202,6 +309,8 @@ export const reducer = (state: Board, action: Action) => {
 
         const index = nextState.pieces.findIndex((i) => i.id === piece.id);
         nextState.pieces[index] = piece;
+
+        nextState.whiteTurn = !nextState.whiteTurn;
 
         return nextState;
       }

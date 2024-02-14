@@ -29,6 +29,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -43,6 +44,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -57,6 +59,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -71,6 +74,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -85,6 +89,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -99,6 +104,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -113,6 +119,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -127,6 +134,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -141,6 +149,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -155,6 +164,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -169,6 +179,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -183,6 +194,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -197,6 +209,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -211,6 +224,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -225,6 +239,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -239,6 +254,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -253,6 +269,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -267,6 +284,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -281,6 +299,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -295,6 +314,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -309,6 +329,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -323,6 +344,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -337,6 +359,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -351,6 +374,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -365,6 +389,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -379,6 +404,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -393,6 +419,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -407,6 +434,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -421,6 +449,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -435,6 +464,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -449,6 +479,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -463,6 +494,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          captured: false,
         },
       },
     });
@@ -522,67 +554,71 @@ export function Board() {
             />
           </>
         )}
-        {state.pieces.map((piece) => {
-          const x = piece.x * 48 - piece.xOffset; // + 6;
-          const y = piece.y * 48 - piece.yOffset; // + 6;
-          const isDragging = piece.id === state.dragging?.id;
-          return (
-            <motion.img
-              src={`/${piece.name}.png`}
-              key={piece.id}
-              drag
-              dragMomentum={false}
-              whileHover={{ scale: 1.1 }}
-              onDragStart={() =>
-                dispatch({ type: "DRAG_STARTED", payload: { piece } })
-              }
-              onDragEnd={(_, info) => {
-                const offset = {
-                  x: info.offset.x,
-                  y: info.offset.y,
-                };
-                dispatch({ type: "DRAG_ENDED", payload: { piece, offset } });
-              }}
-              onDrag={(_, info) => {
-                const point = {
-                  x: Math.min(
-                    Math.max(Math.round((info.point.x - 24) / 48), 0),
-                    7,
-                  ),
-                  y: Math.min(
-                    Math.max(Math.round((info.point.y - 24) / 48), 0),
-                    7,
-                  ),
-                };
-
-                if (state.dragging) {
-                  const { nextPoint } = state.dragging;
-                  if (point.x !== nextPoint.x || point.y !== nextPoint.y) {
-                    dispatch({
-                      type: "DRAG_MOVED",
-                      payload: { piece, point },
-                    });
-                  }
+        {state.pieces
+          .filter((piece) => piece.captured === false)
+          .map((piece) => {
+            const x = piece.x * 48 - piece.xOffset; // + 6;
+            const y = piece.y * 48 - piece.yOffset; // + 6;
+            const isDragging = piece.id === state.dragging?.id;
+            return (
+              <motion.img
+                src={`/${piece.name}.png`}
+                key={piece.id}
+                drag
+                dragMomentum={false}
+                whileHover={{ scale: 1.1 }}
+                onDragStart={() =>
+                  dispatch({ type: "DRAG_STARTED", payload: { piece } })
                 }
-              }}
-              onAnimationComplete={() => dispatch({ type: "ANIMATION_ENDED" })}
-              initial={false}
-              animate={!isDragging}
-              style={{
-                position: "absolute",
-                top: y,
-                left: x,
-                //border: "2px solid #000",
-                //backgroundColor: "#3f3f3f",
-                // fontSize: 12,
-                // textAlign: "center",
-                height: 48,
-                width: 48,
-                zIndex: isDragging ? 99 : 1,
-              }}
-            ></motion.img>
-          );
-        })}
+                onDragEnd={(_, info) => {
+                  const offset = {
+                    x: info.offset.x,
+                    y: info.offset.y,
+                  };
+                  dispatch({ type: "DRAG_ENDED", payload: { piece, offset } });
+                }}
+                onDrag={(_, info) => {
+                  const point = {
+                    x: Math.min(
+                      Math.max(Math.round((info.point.x - 24) / 48), 0),
+                      7,
+                    ),
+                    y: Math.min(
+                      Math.max(Math.round((info.point.y - 24) / 48), 0),
+                      7,
+                    ),
+                  };
+
+                  if (state.dragging) {
+                    const { nextPoint } = state.dragging;
+                    if (point.x !== nextPoint.x || point.y !== nextPoint.y) {
+                      dispatch({
+                        type: "DRAG_MOVED",
+                        payload: { piece, point },
+                      });
+                    }
+                  }
+                }}
+                onAnimationComplete={() =>
+                  dispatch({ type: "ANIMATION_ENDED" })
+                }
+                initial={false}
+                animate={!isDragging}
+                style={{
+                  position: "absolute",
+                  top: y,
+                  left: x,
+                  //border: "2px solid #000",
+                  //backgroundColor: "#3f3f3f",
+                  // fontSize: 12,
+                  // textAlign: "center",
+                  height: 48,
+                  width: 48,
+                  zIndex: isDragging ? 99 : 1,
+                }}
+              ></motion.img>
+            );
+          })}
       </div>
     </>
   );
