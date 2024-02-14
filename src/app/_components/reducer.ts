@@ -48,10 +48,9 @@ export const reducer = (state: Board, action: Action) => {
      * check that there isn't a piece in the way
      * check that if there is a piece on destination it is the opposite color
      * check that the move doesn't result in own check (new or existing)
+     * check for pawn promotion
+     * 	if pawn hits end rank, for now just auto queen, piece.name = "xq"
      */
-
-    let tempX: number = piece.x;
-    let tempY: number = piece.y;
 
     let valid: boolean = false;
 
@@ -67,10 +66,6 @@ export const reducer = (state: Board, action: Action) => {
       return valid;
     }
 
-    // Consider doing this one square at a time for non-knight pieces instead of
-    // calculating final valid square and in between issues.
-    // Then if ever step was blank and the final step was blank or occupied by
-    // opposite color this would work.
     switch (piece.name) {
       case "br":
       case "wr":
@@ -97,8 +92,8 @@ export const reducer = (state: Board, action: Action) => {
           }
           valid = true;
         }
-
         break;
+
       case "bb":
       case "wb":
         if (Math.abs(piece.x - point.x) === Math.abs(piece.y - point.y)) {
@@ -128,7 +123,6 @@ export const reducer = (state: Board, action: Action) => {
           }
           valid = true;
         }
-
         break;
 
       case "bn":
@@ -141,6 +135,7 @@ export const reducer = (state: Board, action: Action) => {
         )
           valid = true;
         break;
+
       case "bq":
       case "wq":
         if (piece.x === point.x || piece.y === point.y) {
@@ -195,6 +190,7 @@ export const reducer = (state: Board, action: Action) => {
           valid = true;
         }
         break;
+
       case "bk":
       case "wk":
         if (
@@ -203,9 +199,11 @@ export const reducer = (state: Board, action: Action) => {
         )
           valid = true;
         break;
+
       case "wp":
         if (piece.x === point.x && piece.y - 1 === point.y) valid = true;
         break;
+
       case "bp":
         if (piece.x === point.x && piece.y + 1 === point.y) valid = true;
         break;
@@ -294,6 +292,15 @@ export const reducer = (state: Board, action: Action) => {
           const index = nextState.pieces.findIndex((i) => i.id === piece.id);
           nextState.pieces[index] = piece;
           return nextState;
+        }
+
+        // check if there is a piece on that square already
+        // if move is valid, the piece is captured and removed from state.pieces[]
+        if (nextState.squares[point.y][point.x].charAt(0) !== "") {
+          const ind = nextState.pieces.findIndex(
+            (p) => p.x === point.x && p.y === point.y,
+          );
+          nextState.pieces = nextState.pieces.splice(ind, 1);
         }
 
         nextState.squares = clearPieceFromSquare(piece, nextState.squares);

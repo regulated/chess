@@ -6,7 +6,6 @@ export interface Piece {
   xOffset: number;
   yOffset: number;
   moved: boolean;
-  captured: boolean;
 }
 
 // 8x8 grid of square names should be lower case ex e4 d5
