@@ -14,6 +14,7 @@ export const initial: Board = {
   ],
   dragging: undefined,
   whiteTurn: true,
+  valid: false,
 };
 
 export type Action =
@@ -276,11 +277,16 @@ export const reducer = (state: Board, action: Action) => {
       const nextState = { ...state };
       const { piece, offset } = action.payload;
 
+      console.log("Drag just ended");
+      console.log(piece);
+
       if (nextState.dragging) {
         const { valid, initialPoint, nextPoint } = nextState.dragging;
         const point = valid ? nextPoint : initialPoint;
 
         // to cancel out double call
+        if (piece.moved && nextState.valid)
+          return { ...nextState, whiteTurn: !nextState.whiteTurn };
         if (piece.moved) return nextState;
 
         if (!valid) {
@@ -289,8 +295,11 @@ export const reducer = (state: Board, action: Action) => {
           piece.xOffset += offset.x;
           piece.yOffset += offset.y;
           piece.moved = true;
+          nextState.valid = false;
           const index = nextState.pieces.findIndex((i) => i.id === piece.id);
           nextState.pieces[index] = piece;
+          console.log("Not valid ");
+          console.log(piece);
           return nextState;
         }
 
@@ -311,6 +320,7 @@ export const reducer = (state: Board, action: Action) => {
         piece.yOffset += offset.y;
 
         piece.moved = true;
+        nextState.valid = true;
 
         nextState.squares = setPieceToSquare(piece, nextState.squares);
 
@@ -319,9 +329,17 @@ export const reducer = (state: Board, action: Action) => {
 
         nextState.whiteTurn = !nextState.whiteTurn;
 
+        console.log(nextState);
+
+        console.log("end dragging ");
+        console.log(piece);
         return nextState;
       }
 
+      console.log(nextState.whiteTurn);
+
+      console.log("not dragging ");
+      console.log(piece);
       return nextState;
     }
     case "ANIMATION_ENDED": {

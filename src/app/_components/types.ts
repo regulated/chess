@@ -22,6 +22,7 @@ export type Board = {
     offset: Point;
   };
   whiteTurn: boolean;
+  valid: boolean;
 };
 
 // dom location
