@@ -531,10 +531,10 @@ export function Board() {
             <motion.img
               src={`/${piece.name}.png`}
               key={piece.id}
-              drag /*={
-								(state.whiteTurn && piece.name.startsWith('w')) ||
-								(!state.whiteTurn && piece.name.startsWith('b'))
-							}*/
+              drag={
+                (state.whiteTurn && piece.name.startsWith("w")) ||
+                (!state.whiteTurn && piece.name.startsWith("b"))
+              }
               dragMomentum={false}
               whileHover={{ scale: 1.1 }}
               onDragStart={() =>
