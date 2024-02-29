@@ -29,6 +29,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -43,6 +44,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -57,6 +59,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -71,6 +74,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -85,6 +89,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -99,6 +104,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -113,6 +119,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -127,6 +134,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -141,6 +149,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -155,6 +164,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -169,6 +179,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -183,6 +194,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -197,6 +209,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -211,6 +224,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -225,6 +239,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -239,6 +254,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -253,6 +269,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -267,6 +284,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -281,6 +299,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -295,6 +314,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -309,6 +329,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -323,6 +344,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -337,6 +359,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -351,6 +374,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -365,6 +389,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -379,6 +404,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -393,6 +419,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -407,6 +434,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -421,6 +449,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -435,6 +464,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -449,6 +479,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -463,6 +494,7 @@ export function Board() {
           xOffset: 0,
           yOffset: 0,
           moved: false,
+          firstMove: true,
         },
       },
     });
@@ -483,7 +515,7 @@ export function Board() {
                   }`}
                   key={`${y}_${x}`}
                 >
-                  {x + " " + y}
+                  {/*x + " " + y*/}
                 </div>
               );
             });

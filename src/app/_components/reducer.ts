@@ -193,18 +193,61 @@ export const reducer = (state: Board, action: Action) => {
           valid = true;
         break;
 
+      // still need diag captures and no forward captures
       case "wp":
-        if (piece.x === point.x && piece.y - 1 === point.y) valid = true;
+        if (piece.firstMove) {
+          if (
+            piece.x === point.x &&
+            piece.y - 2 === point.y &&
+            squares[point.y][point.x] === ""
+          )
+            valid = true;
+        }
+        if (
+          piece.x === point.x &&
+          piece.y - 1 === point.y &&
+          squares[point.y][point.x] === ""
+        )
+          valid = true;
+        if (
+          Math.abs(piece.x - point.x) === 1 &&
+          piece.y - 1 === point.y &&
+          squares[point.y][point.x].startsWith("b")
+        )
+          valid = true;
         break;
 
       case "bp":
-        if (piece.x === point.x && piece.y + 1 === point.y) valid = true;
+        if (piece.firstMove) {
+          if (
+            piece.x === point.x &&
+            piece.y + 2 === point.y &&
+            squares[point.y][point.x] === ""
+          )
+            valid = true;
+        }
+        if (
+          piece.x === point.x &&
+          piece.y + 1 === point.y &&
+          squares[point.y][point.x] === ""
+        )
+          valid = true;
+        if (
+          Math.abs(piece.x - point.x) === 1 &&
+          piece.y + 1 === point.y &&
+          squares[point.y][point.x].startsWith("w")
+        )
+          valid = true;
         break;
     }
 
-    if (valid && !squares[point.y][point.x].startsWith(piece.name.charAt(0)))
+    if (
+      valid &&
+      piece.name.charAt(1) !== "p" &&
+      !squares[point.y][point.x].startsWith(piece.name.charAt(0))
+    )
       valid = true;
-    else valid = false;
+    else if (piece.name.charAt(1) !== "p") valid = false;
 
     return valid;
   }
@@ -319,6 +362,7 @@ export const reducer = (state: Board, action: Action) => {
         piece.yOffset += offset.y;
 
         piece.moved = true;
+        piece.firstMove = false;
         // nextState.valid = true;
 
         nextState.squares = setPieceToSquare(piece, nextState.squares);

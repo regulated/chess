@@ -13,4 +13,8 @@ export const pieceStyle = "h-6 w-6";
  * 24 = 384px
  * bg-slate-200
  * bg-amber-600
+ *
+ * gray
+ * bg-slate-900
+ * bg-slate-950
  * */

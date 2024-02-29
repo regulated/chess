@@ -6,6 +6,7 @@ export interface Piece {
   xOffset: number;
   yOffset: number;
   moved: boolean;
+  firstMove: boolean;
 }
 
 // 8x8 grid of square names should be lower case ex e4 d5
@@ -22,7 +23,7 @@ export type Board = {
     offset: Point;
   };
   whiteTurn: boolean;
-  valid: boolean;
+  // valid: boolean;
 };
 
 // dom location
