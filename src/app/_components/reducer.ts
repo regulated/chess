@@ -14,7 +14,6 @@ export const initial: Board = {
   ],
   dragging: undefined,
   whiteTurn: true,
-  valid: false,
 };
 
 export type Action =
