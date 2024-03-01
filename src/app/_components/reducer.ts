@@ -54,14 +54,6 @@ export const reducer = (state: Board, action: Action) => {
 
     let valid = false;
 
-    // console.log(state.whiteTurn + " " + piece.name.charAt(0));
-    // if (
-    //   (state.whiteTurn && piece.name.charAt(0) === "b") ||
-    //   (!state.whiteTurn && piece.name.charAt(0) === "w")
-    // ) {
-    //   return false;
-    // }
-
     if (piece.x === point.x && piece.y === point.y) {
       return valid;
     }
@@ -251,8 +243,6 @@ export const reducer = (state: Board, action: Action) => {
     return valid;
   }
 
-  // function capturePiece(attacker: Piece, defender: Piece, squares: Squares) {}
-
   switch (action.type) {
     case "ADD_PIECE": {
       const nextState = { ...state };
@@ -333,9 +323,9 @@ export const reducer = (state: Board, action: Action) => {
           piece.y = point.y;
           piece.xOffset += offset.x;
           piece.yOffset += offset.y;
-          piece.moved = true;
+          // piece.moved = true;
           // nextState.valid = false;
-          nextState.whiteTurn = !nextState.whiteTurn;
+          // nextState.whiteTurn = !nextState.whiteTurn;
           const index = nextState.pieces.findIndex((i) => i.id === piece.id);
           nextState.pieces[index] = piece;
           console.log("Not valid ");
@@ -350,7 +340,9 @@ export const reducer = (state: Board, action: Action) => {
           const ind = nextState.pieces.findIndex(
             (p) => p.x === point.x && p.y === point.y,
           );
-          nextState.pieces = nextState.pieces.splice(ind, 1);
+          console.log(nextState.pieces);
+          /*nextState.pieces =*/ nextState.pieces.splice(ind, 1);
+          console.log(nextState.pieces);
         }
 
         nextState.squares = clearPieceFromSquare(piece, nextState.squares);
@@ -362,7 +354,6 @@ export const reducer = (state: Board, action: Action) => {
 
         piece.moved = true;
         piece.firstMove = false;
-        // nextState.valid = true;
 
         nextState.squares = setPieceToSquare(piece, nextState.squares);
 
