@@ -323,7 +323,7 @@ export const reducer = (state: Board, action: Action) => {
           piece.y = point.y;
           piece.xOffset += offset.x;
           piece.yOffset += offset.y;
-          // piece.moved = true;
+          piece.moved = true;
           // nextState.valid = false;
           // nextState.whiteTurn = !nextState.whiteTurn;
           const index = nextState.pieces.findIndex((i) => i.id === piece.id);
@@ -340,9 +340,7 @@ export const reducer = (state: Board, action: Action) => {
           const ind = nextState.pieces.findIndex(
             (p) => p.x === point.x && p.y === point.y,
           );
-          console.log(nextState.pieces);
-          /*nextState.pieces =*/ nextState.pieces.splice(ind, 1);
-          console.log(nextState.pieces);
+          nextState.pieces.splice(ind, 1);
         }
 
         nextState.squares = clearPieceFromSquare(piece, nextState.squares);
