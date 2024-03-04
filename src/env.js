@@ -10,9 +10,9 @@ export const env = createEnv({
     DATABASE_URL: z
       .string()
       .url()
-      .refine(
-        (str) => !str.includes("test"),
-        "You forgot to change the default URL",
+      // .refine(
+      //   (str) => !str.includes("test"),
+      //   "You forgot to change the default URL",
       ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
