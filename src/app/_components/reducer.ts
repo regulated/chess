@@ -52,6 +52,16 @@ export const reducer = (state: Board, action: Action) => {
      * 	if pawn hits end rank, for now just auto queen, piece.name = "xq"
      */
 
+    /*
+     * Idea for check:
+     * have a subfunction that checks for each piece in resulting position
+     * if either king is in check
+     * if opposite king: create an incheck state that must be gotten rid of
+     * 	just continuing would work here bc the invalid check will take care
+     * 	of this situation on the next player's turn
+     * if current king: return invalid
+     * */
+
     let valid = false;
 
     if (piece.x === point.x && piece.y === point.y) {
@@ -229,6 +239,14 @@ export const reducer = (state: Board, action: Action) => {
           squares[point.y][point.x].startsWith("w")
         )
           valid = true;
+
+        // promotion
+        if (valid && piece.name.startsWith("w") && point.y === 0) {
+          piece.name = "wq";
+        }
+        if (valid && piece.name.startsWith("b") && point.y === 7) {
+          piece.name = "bq";
+        }
         break;
     }
 
