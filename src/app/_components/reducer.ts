@@ -329,8 +329,8 @@ export const reducer = (state: Board, action: Action) => {
           const index = nextState.pieces.findIndex((i) => i.id === piece.id);
           nextState.pieces[index] = piece;
           console.log("Not valid ");
-          console.log(piece);
           console.log(nextState);
+          console.log(piece);
           return nextState;
         }
 
