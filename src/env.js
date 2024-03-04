@@ -7,11 +7,13 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z.string().url(),
-    // .refine(
-    //   (str) => !str.includes("test"),
-    //   "You forgot to change the default URL",
-    // )
+    DATABASE_URL: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes("sqlite"),
+        "You forgot to change the default URL",
+      ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
