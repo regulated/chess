@@ -555,8 +555,8 @@ export function Board() {
           </>
         )}
         {state.pieces.map((piece) => {
-          const x = piece.x * 48 - piece.xOffset; // + 6;
-          const y = piece.y * 48 - piece.yOffset; // + 6;
+          const x = piece.x * 48 - piece.xOffset;
+          const y = piece.y * 48 - piece.yOffset;
           const isDragging = piece.id === state.dragging?.id;
           return (
             <motion.img

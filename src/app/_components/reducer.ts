@@ -194,7 +194,6 @@ export const reducer = (state: Board, action: Action) => {
           valid = true;
         break;
 
-      // still need diag captures and no forward captures
       case "wp":
         if (piece.firstMove) {
           if (
@@ -216,6 +215,7 @@ export const reducer = (state: Board, action: Action) => {
           squares[point.y][point.x].startsWith("b")
         )
           valid = true;
+
         break;
 
       case "bp":
@@ -240,13 +240,6 @@ export const reducer = (state: Board, action: Action) => {
         )
           valid = true;
 
-        // promotion
-        if (valid && piece.name.startsWith("w") && point.y === 0) {
-          piece.name = "wq";
-        }
-        if (valid && piece.name.startsWith("b") && point.y === 7) {
-          piece.name = "bq";
-        }
         break;
     }
 
@@ -319,9 +312,9 @@ export const reducer = (state: Board, action: Action) => {
       const nextState = { ...state };
       const { piece, offset } = action.payload;
 
-      console.log("Drag just ended");
-      console.log(piece);
-      console.log(nextState);
+      // console.log("Drag just ended");
+      // console.log(piece);
+      // console.log(nextState);
 
       if (nextState.dragging) {
         const { valid, initialPoint, nextPoint } = nextState.dragging;
@@ -346,9 +339,9 @@ export const reducer = (state: Board, action: Action) => {
           // nextState.whiteTurn = !nextState.whiteTurn;
           const index = nextState.pieces.findIndex((i) => i.id === piece.id);
           nextState.pieces[index] = piece;
-          console.log("Not valid ");
-          console.log(nextState);
-          console.log(piece);
+          // console.log("Not valid ");
+          // console.log(nextState);
+          // console.log(piece);
           return nextState;
         }
 
@@ -371,6 +364,10 @@ export const reducer = (state: Board, action: Action) => {
         piece.moved = true;
         piece.firstMove = false;
 
+        // check for promotion
+        if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
+        if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
+
         nextState.squares = setPieceToSquare(piece, nextState.squares);
 
         const index = nextState.pieces.findIndex((i) => i.id === piece.id);
@@ -378,15 +375,15 @@ export const reducer = (state: Board, action: Action) => {
 
         nextState.whiteTurn = !nextState.whiteTurn;
 
-        console.log("end dragging ");
-        console.log(piece);
-        console.log(nextState);
+        // console.log("end dragging ");
+        // console.log(piece);
+        // console.log(nextState);
         return nextState;
       }
 
-      console.log("not dragging ");
-      console.log(piece);
-      console.log(nextState);
+      // console.log("not dragging ");
+      // console.log(piece);
+      // console.log(nextState);
       return nextState;
     }
     case "ANIMATION_ENDED": {
