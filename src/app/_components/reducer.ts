@@ -305,7 +305,8 @@ export const reducer = (state: Board, action: Action) => {
         console.log(p);
         if (
           !p.name.startsWith(currentKing.name.charAt(0)) &&
-          isValid(p, currentKingPoint, tempSquares, 0)
+          isValid(p, currentKingPoint, tempSquares, 0) &&
+          (point.x !== p.x || point.y !== p.y)
         ) {
           valid = false;
         }
