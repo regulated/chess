@@ -40,7 +40,12 @@ export const reducer = (state: Board, action: Action) => {
     return next;
   }
 
-  function isValid(piece: Piece, point: Point, squares: Squares) {
+  function isValid(
+    piece: Piece,
+    point: Point,
+    squares: Squares,
+    depth: number,
+  ) {
     /*
      * check that it is the right side's turn
      * check that the piece moved
@@ -48,7 +53,7 @@ export const reducer = (state: Board, action: Action) => {
      * check that there isn't a piece in the way
      * check that if there is a piece on destination it is the opposite color
      * check that the move doesn't result in own check (new or existing)
-     * check for pawn promotion
+     * check for pawn promotion (doing this after move has been made)
      * 	if pawn hits end rank, for now just auto queen, piece.name = "xq"
      */
 
@@ -60,6 +65,21 @@ export const reducer = (state: Board, action: Action) => {
      * 	just continuing would work here bc the invalid check will take care
      * 	of this situation on the next player's turn
      * if current king: return invalid
+     * */
+
+    /*
+     * Castling
+     * Check that the king and the rook on required side have not moved
+     * check that there are no pieces b/w the king and the rook
+     * once check is enabled, make sure the king does not pass through check when castling
+     * */
+
+    /*
+     * en passant
+     * check that wp is on 5th rank (3) or bp is on 4th rank (4)
+     * check that the opposite color pawn is directly to the side
+     * check that that specific pawn just moved there in two moves
+     * capture diagonally and remove the pawn to the side
      * */
 
     let valid = false;
@@ -251,6 +271,47 @@ export const reducer = (state: Board, action: Action) => {
       valid = true;
     else if (piece.name.charAt(1) !== "p") valid = false;
 
+    /*
+     * Check the position and make sure the current side is not in check
+     * if current side is in check, return false
+     * */
+
+    // loop through all pieces on opposite side
+    // check that none of their pieces have a valid move to the
+    // location of the current sides king
+
+    if (depth && valid) {
+      // base case where piece moves to another square, different for:
+      // 	en passant
+      // 	castling
+
+      const currentKing =
+        state.pieces.find((p) => p.name === piece.name.charAt(0) + "k") ??
+        piece;
+
+      const currentKingPoint =
+        piece.name.charAt(1) === "k"
+          ? { x: point.x, y: point.y }
+          : { x: currentKing.x, y: currentKing.y };
+
+      let tempSquares = JSON.parse(JSON.stringify(squares));
+      tempSquares[piece.y][piece.x] = "";
+      tempSquares[point.y][point.x] = piece.name;
+
+      state.pieces.forEach((p) => {
+        console.log(p);
+        if (
+          !p.name.startsWith(currentKing.name.charAt(0)) &&
+          isValid(p, currentKingPoint, tempSquares, 0)
+        ) {
+          console.log("check");
+          valid = false;
+        }
+      });
+      console.log("passed");
+      console.log(valid);
+    }
+
     return valid;
   }
 
@@ -303,7 +364,7 @@ export const reducer = (state: Board, action: Action) => {
 
       if (nextState.dragging) {
         nextState.dragging.nextPoint = point;
-        nextState.dragging.valid = isValid(piece, point, nextState.squares);
+        nextState.dragging.valid = isValid(piece, point, nextState.squares, 1);
       }
 
       return nextState;
