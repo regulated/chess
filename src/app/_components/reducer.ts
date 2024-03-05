@@ -284,17 +284,20 @@ export const reducer = (state: Board, action: Action) => {
       // base case where piece moves to another square, different for:
       // 	en passant
       // 	castling
+      // 	need to check for capturing the piece issuing the check
 
-      const currentKing =
-        state.pieces.find((p) => p.name === piece.name.charAt(0) + "k") ??
-        piece;
+      const currentKing: Piece | undefined = state.pieces.find(
+        (p) => p.name === piece.name.charAt(0) + "k",
+      );
 
-      const currentKingPoint =
+      if (currentKing === undefined) return false;
+
+      const currentKingPoint: Point =
         piece.name.charAt(1) === "k"
           ? { x: point.x, y: point.y }
           : { x: currentKing.x, y: currentKing.y };
 
-      let tempSquares = JSON.parse(JSON.stringify(squares));
+      const tempSquares: Squares = JSON.parse(JSON.stringify(squares));
       tempSquares[piece.y][piece.x] = "";
       tempSquares[point.y][point.x] = piece.name;
 
@@ -304,12 +307,9 @@ export const reducer = (state: Board, action: Action) => {
           !p.name.startsWith(currentKing.name.charAt(0)) &&
           isValid(p, currentKingPoint, tempSquares, 0)
         ) {
-          console.log("check");
           valid = false;
         }
       });
-      console.log("passed");
-      console.log(valid);
     }
 
     return valid;

@@ -16,6 +16,9 @@ const config = {
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
 
+    // Any
+    "@typescript-eslint/no-unsafe-assignment": "off",
+
     "@typescript-eslint/strict-boolean-expressions": "warn",
 
     "@typescript-eslint/consistent-type-imports": [
