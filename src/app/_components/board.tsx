@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useEffect, useRef } from "react";
+import { useReducer, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   whiteSquareStyle,
