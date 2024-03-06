@@ -302,7 +302,6 @@ export const reducer = (state: Board, action: Action) => {
       tempSquares[point.y][point.x] = piece.name;
 
       state.pieces.forEach((p) => {
-        console.log(p);
         if (
           !p.name.startsWith(currentKing.name.charAt(0)) &&
           isValid(p, currentKingPoint, tempSquares, 0) &&
