@@ -2,8 +2,7 @@ export const whiteSquareStyle =
   "flex justify-center items-center bg-slate-200 h-6 w-6";
 export const blackSquareStyle =
   "flex justify-center items-center bg-amber-600 h-6 w-6";
-export const boardStyle =
-  "absolute top-0 left-0 grid-rows-8 grid grid-cols-8 h-24 w-24";
+export const boardStyle = "absolute grid-rows-8 grid grid-cols-8 h-24 w-24";
 export const wrapper =
   "relative overflow-hidden flex items-center justify-center w-screen h-screen";
 export const pieceStyle = "h-6 w-6";

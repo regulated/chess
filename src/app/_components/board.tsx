@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useEffect /*, useRef*/ } from "react";
+import { useReducer, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   whiteSquareStyle,
@@ -9,8 +9,7 @@ import {
   wrapper,
 } from "../../styles/boardStyles";
 import { reducer, initial } from "./reducer";
-import Image from "next/image";
-// import { bk } from "../../../public";
+import useScreenSize from "./useScreenSize";
 
 export function Board() {
   const [state, dispatch] = useReducer(reducer, initial);
@@ -500,6 +499,9 @@ export function Board() {
     });
   }, []);
 
+  const windowOffsetX = useScreenSize().width / 2 - 192;
+  const windowOffsetY = useScreenSize().height / 2 - 192;
+
   const draggingPiece = state.pieces.find((p) => p.id === state.dragging?.id);
 
   return (
@@ -507,7 +509,7 @@ export function Board() {
       <div className={wrapper}>
         <div className={boardStyle}>
           {state.squares.map((row: string[], y: number) => {
-            return row.map((square: string, x: number) => {
+            return row.map((_, x: number) => {
               return (
                 <div
                   className={`${
@@ -529,8 +531,8 @@ export function Board() {
                 top: 0,
                 left: 0,
                 backgroundColor: "rgba(239, 239, 239,.8)",
-                x: state.dragging.initialPoint.x * 48,
-                y: state.dragging.initialPoint.y * 48,
+                x: state.dragging.initialPoint.x * 48 + windowOffsetX,
+                y: state.dragging.initialPoint.y * 48 + windowOffsetY,
                 width: 48,
                 height: 48,
                 borderRadius: "6px",
@@ -545,8 +547,8 @@ export function Board() {
                 backgroundColor: state.dragging.valid
                   ? "rgb(152, 195, 121)"
                   : "rgb(224, 109, 118)",
-                x: state.dragging.nextPoint.x * 48,
-                y: state.dragging.nextPoint.y * 48,
+                x: state.dragging.nextPoint.x * 48 + windowOffsetX,
+                y: state.dragging.nextPoint.y * 48 + windowOffsetY,
                 width: 48,
                 height: 48,
                 borderRadius: "6px",
@@ -555,8 +557,8 @@ export function Board() {
           </>
         )}
         {state.pieces.map((piece) => {
-          const x = piece.x * 48 - piece.xOffset;
-          const y = piece.y * 48 - piece.yOffset;
+          const x = piece.x * 48 - piece.xOffset + windowOffsetX;
+          const y = piece.y * 48 - piece.yOffset + windowOffsetY;
           const isDragging = piece.id === state.dragging?.id;
           return (
             <motion.img
@@ -581,11 +583,17 @@ export function Board() {
               onDrag={(_, info) => {
                 const point = {
                   x: Math.min(
-                    Math.max(Math.round((info.point.x - 24) / 48), 0),
+                    Math.max(
+                      Math.round((info.point.x - 24 - windowOffsetX) / 48),
+                      0,
+                    ),
                     7,
                   ),
                   y: Math.min(
-                    Math.max(Math.round((info.point.y - 24) / 48), 0),
+                    Math.max(
+                      Math.round((info.point.y - 24 - windowOffsetY) / 48),
+                      0,
+                    ),
                     7,
                   ),
                 };
