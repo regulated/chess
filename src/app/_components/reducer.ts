@@ -12,12 +12,24 @@ export const initial: Board = {
     ["", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", ""],
   ],
+  validSquares: [
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false],
+  ],
   dragging: undefined,
   whiteTurn: true,
 };
 
 export type Action =
   | { type: "ADD_PIECE"; payload: { piece: Piece } }
+  | { type: "TAP_PIECE"; payload: { piece: Piece } }
+  | { type: "CLEAR_TAP" }
   | { type: "MOVE_PIECE"; payload: { piece: Piece; point: Point } }
   | { type: "DRAG_STARTED"; payload: { piece: Piece } }
   | {
@@ -328,6 +340,35 @@ export const reducer = (state: Board, action: Action) => {
 
       return nextState;
     }
+    // onTap
+    // run through all squares, if any are valid for that piece mark them
+    // if one of them is clicked, move piece there.
+    // if another piece is clicked, run TAP_PIECE with new piece
+    case "TAP_PIECE": {
+      const nextState = { ...state };
+      const { piece } = action.payload;
+
+      for (let y = 0; y <= 7; y++) {
+        for (let x = 0; x <= 7; x++) {
+          if (isValid(piece, { x, y }, nextState.squares, 1)) {
+            nextState.validSquares[y][x] = true;
+          }
+        }
+      }
+
+      return nextState;
+    }
+    case "CLEAR_TAP": {
+      const nextState = { ...state };
+
+      for (let y = 0; y <= 7; y++) {
+        for (let x = 0; x <= 7; x++) {
+          nextState.validSquares[y][x] = false;
+        }
+      }
+
+      return nextState;
+    }
     case "MOVE_PIECE": {
       const nextState = { ...state };
       const { piece, point } = action.payload;
@@ -373,10 +414,6 @@ export const reducer = (state: Board, action: Action) => {
       const nextState = { ...state };
       const { piece, offset } = action.payload;
 
-      // console.log("Drag just ended");
-      // console.log(piece);
-      // console.log(nextState);
-
       if (nextState.dragging) {
         const { valid, initialPoint, nextPoint } = nextState.dragging;
         const point = valid ? nextPoint : initialPoint;
@@ -400,9 +437,6 @@ export const reducer = (state: Board, action: Action) => {
           // nextState.whiteTurn = !nextState.whiteTurn;
           const index = nextState.pieces.findIndex((i) => i.id === piece.id);
           nextState.pieces[index] = piece;
-          // console.log("Not valid ");
-          // console.log(nextState);
-          // console.log(piece);
           return nextState;
         }
 
@@ -436,15 +470,9 @@ export const reducer = (state: Board, action: Action) => {
 
         nextState.whiteTurn = !nextState.whiteTurn;
 
-        // console.log("end dragging ");
-        // console.log(piece);
-        // console.log(nextState);
         return nextState;
       }
 
-      // console.log("not dragging ");
-      // console.log(piece);
-      // console.log(nextState);
       return nextState;
     }
     case "ANIMATION_ENDED": {

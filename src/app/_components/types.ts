@@ -15,6 +15,7 @@ export type Squares = string[][];
 export type Board = {
   pieces: Piece[];
   squares: string[][];
+  validSquares: boolean[][];
   dragging?: {
     id: string;
     initialPoint: Point;

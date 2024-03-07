@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useEffect } from "react";
+import { useReducer, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   whiteSquareStyle,
@@ -10,6 +10,7 @@ import {
 } from "../../styles/boardStyles";
 import { reducer, initial } from "./reducer";
 import useScreenSize from "./useScreenSize";
+import { Piece, Point } from "./types";
 
 export function Board() {
   const [state, dispatch] = useReducer(reducer, initial);
@@ -504,6 +505,9 @@ export function Board() {
 
   const draggingPiece = state.pieces.find((p) => p.id === state.dragging?.id);
 
+  const [tapped, setTapped] = useState(false);
+  const [tappedPiece, setTappedPiece] = useState<Piece>();
+
   return (
     <>
       <div className={wrapper}>
@@ -511,14 +515,50 @@ export function Board() {
           {state.squares.map((row: string[], y: number) => {
             return row.map((_, x: number) => {
               return (
-                <div
+                <motion.div
                   className={`${
                     (x + y) % 2 == 0 ? whiteSquareStyle : blackSquareStyle
                   }`}
                   key={`${y}_${x}`}
-                >
-                  {/*x + " " + y*/}
-                </div>
+                ></motion.div>
+              );
+            });
+          })}
+        </div>
+        <div className={boardStyle}>
+          {state.squares.map((row: string[], y: number) => {
+            return row.map((_, x: number) => {
+              return (
+                <motion.div
+                  style={
+                    tapped && state.validSquares[y][x]
+                      ? {
+                          border: "1px solid #000",
+                          backgroundColor: "rgb(152, 195, 121)",
+                          width: 48,
+                          height: 48,
+                          borderRadius: "6px",
+                        }
+                      : {
+                          width: 48,
+                          height: 48,
+                          borderRadius: "6px",
+                        }
+                  }
+                  onTap={() => {
+                    const point: Point = { x, y };
+                    const piece = state.pieces.find(
+                      (p) => p.id === tappedPiece?.id,
+                    );
+                    if (state.validSquares[y][x] && piece) {
+                      dispatch({
+                        type: "MOVE_PIECE",
+                        payload: { piece, point },
+                      });
+                    }
+                  }}
+                  key={`${y}_${x}`}
+                ></motion.div>
               );
             });
           })}
@@ -569,10 +609,27 @@ export function Board() {
                 (!state.whiteTurn && piece.name.startsWith("b"))
               }
               dragMomentum={false}
-              whileHover={{ scale: 1.1 }}
-              onDragStart={() =>
-                dispatch({ type: "DRAG_STARTED", payload: { piece } })
-              }
+              whileHover={{ scale: 1.3 }}
+              onTap={() => {
+                if (
+                  (state.whiteTurn && piece.name.startsWith("w")) ||
+                  (!state.whiteTurn && piece.name.startsWith("b"))
+                ) {
+                  dispatch({ type: "CLEAR_TAP" });
+                  setTapped(true);
+                  setTappedPiece(piece);
+                  dispatch({ type: "TAP_PIECE", payload: { piece } });
+                }
+              }}
+              // onTapCancel={() => {
+              //   setTapped(false);
+              //   dispatch({ type: "CLEAR_TAP" });
+              // }}
+              onDragStart={() => {
+                setTapped(false);
+                dispatch({ type: "CLEAR_TAP" });
+                dispatch({ type: "DRAG_STARTED", payload: { piece } });
+              }}
               onDragEnd={(_, info) => {
                 const offset = {
                   x: info.offset.x,
@@ -608,7 +665,9 @@ export function Board() {
                   }
                 }
               }}
-              onAnimationComplete={() => dispatch({ type: "ANIMATION_ENDED" })}
+              onAnimationComplete={() => {
+                dispatch({ type: "ANIMATION_ENDED" });
+              }}
               initial={false}
               animate={!isDragging}
               style={{
