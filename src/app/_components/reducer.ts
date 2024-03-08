@@ -385,13 +385,13 @@ export const reducer = (state: Board, action: Action) => {
         nextState.pieces.splice(ind, 1);
       }
 
-      // check for promotion
-      if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
-      if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
-
       piece.x = point.x;
       piece.y = point.y;
       piece.firstMove = false;
+
+      // check for promotion
+      if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
+      if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
 
       nextState.whiteTurn = !nextState.whiteTurn;
 
