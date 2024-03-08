@@ -8,11 +8,6 @@ Checkmate
 
 Victory
 
-Click controls
-tap piece
-display valid squares
-then tap square to move piece to
-
 !!IMPORTANT
 PGN
 New page
