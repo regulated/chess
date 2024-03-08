@@ -373,12 +373,26 @@ export const reducer = (state: Board, action: Action) => {
       const nextState = { ...state };
       const { piece, point } = action.payload;
 
+      console.log(nextState);
+
       nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+
+      // check if there is a piece on that square already
+      // if move is valid, the piece is captured and removed from state.pieces[]
+      if (nextState.squares[point.y][point.x] !== "") {
+        const ind = nextState.pieces.findIndex(
+          (p) => p.x === point.x && p.y === point.y,
+        );
+        nextState.pieces.splice(ind, 1);
+      }
 
       piece.x = point.x;
       piece.y = point.y;
+      piece.firstMove = false;
 
       nextState.squares = setPieceToSquare(piece, nextState.squares);
+
+      nextState.whiteTurn = !nextState.whiteTurn;
 
       return nextState;
     }

@@ -611,6 +611,11 @@ export function Board() {
               dragMomentum={false}
               whileHover={{ scale: 1.3 }}
               onTap={() => {
+                const capturedPoint: Point = { x: piece.x, y: piece.y };
+                const capturingPiece = state.pieces.find(
+                  (p) => p.id === tappedPiece?.id,
+                );
+                // piece tapped to move
                 if (
                   (state.whiteTurn && piece.name.startsWith("w")) ||
                   (!state.whiteTurn && piece.name.startsWith("b"))
@@ -619,6 +624,21 @@ export function Board() {
                   setTapped(true);
                   setTappedPiece(piece);
                   dispatch({ type: "TAP_PIECE", payload: { piece } });
+                }
+                // piece tapped to capture
+                else if (
+                  tapped &&
+                  state.validSquares[piece.y][piece.x] &&
+                  capturingPiece &&
+                  ((state.whiteTurn && piece.name.startsWith("b")) ||
+                    (!state.whiteTurn && piece.name.startsWith("w")))
+                ) {
+                  dispatch({ type: "CLEAR_TAP" });
+                  setTapped(false);
+                  dispatch({
+                    type: "MOVE_PIECE",
+                    payload: { piece: capturingPiece, point: capturedPoint },
+                  });
                 }
               }}
               // onTapCancel={() => {
