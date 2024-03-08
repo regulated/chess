@@ -386,13 +386,20 @@ export const reducer = (state: Board, action: Action) => {
         nextState.pieces.splice(ind, 1);
       }
 
+      // check for promotion
+      if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
+      if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
+
       piece.x = point.x;
       piece.y = point.y;
       piece.firstMove = false;
 
-      nextState.squares = setPieceToSquare(piece, nextState.squares);
-
       nextState.whiteTurn = !nextState.whiteTurn;
+
+      const index = nextState.pieces.findIndex((i) => i.id === piece.id);
+      nextState.pieces[index] = piece;
+
+      nextState.squares = setPieceToSquare(piece, nextState.squares);
 
       return nextState;
     }
