@@ -370,10 +370,9 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "MOVE_PIECE": {
+      console.log("MOVE_PIECE");
       const nextState = { ...state };
       const { piece, point } = action.payload;
-
-      console.log(nextState);
 
       nextState.squares = clearPieceFromSquare(piece, nextState.squares);
 
@@ -404,6 +403,7 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "DRAG_STARTED": {
+      console.log("DRAG_STARTED");
       const nextState = { ...state };
       const { piece } = action.payload;
       const { x, y } = piece;
@@ -421,6 +421,7 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "DRAG_MOVED": {
+      console.log("DRAG_MOVED");
       const nextState = { ...state };
       const { piece, point } = action.payload;
 
@@ -432,6 +433,7 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "DRAG_ENDED": {
+      console.log("DRAG_ENDED");
       const nextState = { ...state };
       const { piece, offset } = action.payload;
 

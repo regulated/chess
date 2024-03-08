@@ -546,6 +546,7 @@ export function Board() {
                         }
                   }
                   onTap={() => {
+                    console.log("Board tap");
                     const point: Point = { x, y };
                     const piece = state.pieces.find(
                       (p) => p.id === tappedPiece?.id,
@@ -555,6 +556,8 @@ export function Board() {
                         type: "MOVE_PIECE",
                         payload: { piece, point },
                       });
+                      dispatch({ type: "CLEAR_TAP" });
+                      setTapped(false);
                     }
                   }}
                   key={`${y}_${x}`}
@@ -611,6 +614,7 @@ export function Board() {
               dragMomentum={false}
               whileHover={{ scale: 1.3 }}
               onTap={() => {
+                console.log("Piece Tap");
                 const capturedPoint: Point = { x: piece.x, y: piece.y };
                 const capturingPiece = state.pieces.find(
                   (p) => p.id === tappedPiece?.id,
@@ -639,6 +643,9 @@ export function Board() {
                     type: "MOVE_PIECE",
                     payload: { piece: capturingPiece, point: capturedPoint },
                   });
+                } else {
+                  dispatch({ type: "CLEAR_TAP" });
+                  setTapped(false);
                 }
               }}
               // onTapCancel={() => {
@@ -656,6 +663,8 @@ export function Board() {
                   y: info.offset.y,
                 };
                 dispatch({ type: "DRAG_ENDED", payload: { piece, offset } });
+                setTapped(false);
+                dispatch({ type: "CLEAR_TAP" });
               }}
               onDrag={(_, info) => {
                 const point = {
