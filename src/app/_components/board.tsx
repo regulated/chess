@@ -621,7 +621,9 @@ export function Board() {
                 );
                 // piece tapped to move
                 if (
-                  (state.whiteTurn && piece.name.startsWith("w")) ||
+                  (!isDragging &&
+                    state.whiteTurn &&
+                    piece.name.startsWith("w")) ||
                   (!state.whiteTurn && piece.name.startsWith("b"))
                 ) {
                   dispatch({ type: "CLEAR_TAP" });
@@ -631,6 +633,7 @@ export function Board() {
                 }
                 // piece tapped to capture
                 else if (
+                  !isDragging &&
                   tapped &&
                   state.validSquares[piece.y][piece.x] &&
                   capturingPiece &&
@@ -658,13 +661,13 @@ export function Board() {
                 dispatch({ type: "DRAG_STARTED", payload: { piece } });
               }}
               onDragEnd={(_, info) => {
+                setTapped(false);
+                dispatch({ type: "CLEAR_TAP" });
                 const offset = {
                   x: info.offset.x,
                   y: info.offset.y,
                 };
                 dispatch({ type: "DRAG_ENDED", payload: { piece, offset } });
-                setTapped(false);
-                dispatch({ type: "CLEAR_TAP" });
               }}
               onDrag={(_, info) => {
                 const point = {
