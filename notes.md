@@ -4,10 +4,6 @@ En Passant
 
 Castling
 
-Checkmate
-
-Victory
-
 !!IMPORTANT
 PGN
 New page

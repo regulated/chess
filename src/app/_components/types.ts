@@ -24,17 +24,7 @@ export type Board = {
     offset: Point;
   };
   whiteTurn: boolean;
-  // valid: boolean;
 };
 
 // dom location
 export type Point = { x: number; y: number };
-
-/*
-export type BoardType = {
-	square: String;
-	piece: String;
-	x: number;
-	y: number;
-};
-*/

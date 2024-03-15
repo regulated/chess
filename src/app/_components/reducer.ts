@@ -28,16 +28,15 @@ export const initial: Board = {
 
 export type Action =
   | { type: "ADD_PIECE"; payload: { piece: Piece } }
+  | { type: "CLEAR_BOARD" }
   | { type: "TAP_PIECE"; payload: { piece: Piece } }
   | { type: "CLEAR_TAP" }
   | { type: "MOVE_PIECE"; payload: { piece: Piece; point: Point } }
   | { type: "DRAG_STARTED"; payload: { piece: Piece } }
-  | {
-      type: "DRAG_MOVED";
-      payload: { piece: Piece; point: Point };
-    }
+  | { type: "DRAG_MOVED"; payload: { piece: Piece; point: Point } }
   | { type: "DRAG_ENDED"; payload: { piece: Piece; offset: Point } }
-  | { type: "ANIMATION_ENDED" };
+  | { type: "ANIMATION_ENDED" }
+  | { type: "CHECKMATE" };
 
 export const reducer = (state: Board, action: Action) => {
   function clearPieceFromSquare(piece: Piece, squares: Squares) {
@@ -340,6 +339,21 @@ export const reducer = (state: Board, action: Action) => {
 
       return nextState;
     }
+    case "CLEAR_BOARD": {
+      const nextState = { ...state };
+
+      nextState.pieces.length = 0; // = [];
+      for (let y = 0; y <= 7; y++) {
+        for (let x = 0; x <= 7; x++) {
+          nextState.squares[y][x] = "";
+          nextState.validSquares[y][x] = false;
+        }
+      }
+      nextState.dragging = undefined;
+      nextState.whiteTurn = true;
+
+      return nextState;
+    }
     // onTap
     // run through all squares, if any are valid for that piece mark them
     // if one of them is clicked, move piece there.
@@ -370,7 +384,6 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "MOVE_PIECE": {
-      console.log("MOVE_PIECE");
       const nextState = { ...state };
       const { piece, point } = action.payload;
 
@@ -403,7 +416,6 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "DRAG_STARTED": {
-      console.log("DRAG_STARTED");
       const nextState = { ...state };
       const { piece } = action.payload;
       const { x, y } = piece;
@@ -421,7 +433,6 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "DRAG_MOVED": {
-      console.log("DRAG_MOVED");
       const nextState = { ...state };
       const { piece, point } = action.payload;
 
@@ -433,7 +444,6 @@ export const reducer = (state: Board, action: Action) => {
       return nextState;
     }
     case "DRAG_ENDED": {
-      console.log("DRAG_ENDED");
       const nextState = { ...state };
       const { piece, offset } = action.payload;
 
@@ -504,6 +514,31 @@ export const reducer = (state: Board, action: Action) => {
       nextState.dragging = undefined;
 
       return nextState;
+    }
+    case "CHECKMATE": {
+      let mate = true;
+
+      state.pieces.forEach((p) => {
+        if (
+          (p.name.startsWith("w") && state.whiteTurn) ||
+          (p.name.startsWith("b") && !state.whiteTurn)
+        ) {
+          for (let y = 0; y <= 7; y++) {
+            for (let x = 0; x <= 7; x++) {
+              if (isValid(p, { x, y }, state.squares, 1)) {
+                mate = false;
+              }
+            }
+          }
+        }
+      });
+
+      if (mate) {
+        console.log("Checkmate");
+        state.whiteTurn ? console.log("Black Wins") : console.log("White Wins");
+      }
+
+      return state;
     }
     default: {
       return state;
