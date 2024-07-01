@@ -6,17 +6,17 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 
 export function CreatePost() {
-  const router = useRouter();
-  const [name, setName] = useState("");
+	const router = useRouter();
+	const [name, setName] = useState("");
 
-  const createPost = api.post.create.useMutation({
-    onSuccess: () => {
-      router.refresh();
-      setName("");
-    },
-  });
+	const createPost = api.post.create.useMutation({
+		onSuccess: () => {
+			router.refresh();
+			setName("");
+		},
+	});
 
-  return (
+	return <div />; /*(
     <form
       onSubmit={(e) => {
         e.preventDefault();
@@ -39,5 +39,5 @@ export function CreatePost() {
         {createPost.isLoading ? "Submitting..." : "Submit"}
       </button>
     </form>
-  );
+  );*/
 }
