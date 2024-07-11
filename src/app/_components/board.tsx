@@ -12,6 +12,7 @@ import {
 import { reducer, initial } from "./reducer";
 import useScreenSize from "./useScreenSize";
 import { Piece, Point } from "./types";
+import { format } from "./format";
 
 export function Board() {
 	const [state, dispatch] = useReducer(reducer, initial);
@@ -19,7 +20,7 @@ export function Board() {
 	const [clear, setClear] = useState(false);
 
 	useEffect(() => {
-		console.log(state);
+		//console.log(state);
 		dispatch({ type: "CLEAR_BOARD" });
 		dispatch({
 			type: "ADD_PIECE",
@@ -511,6 +512,9 @@ export function Board() {
 	const [tapped, setTapped] = useState(false);
 	const [tappedPiece, setTappedPiece] = useState<Piece>();
 
+	console.log(state);
+	console.log(format(state));
+
 	return (
 		<>
 			<div className={wrapper}>
@@ -548,7 +552,7 @@ export function Board() {
 											}
 									}
 									onTap={() => {
-										console.log("Board tap");
+										//console.log("Board tap");
 										const point: Point = { x, y };
 										const piece = state.pieces.find(
 											(p) => p.id === tappedPiece?.id,
@@ -603,7 +607,7 @@ export function Board() {
 					</>
 				)}
 				{state.pieces.map((piece) => {
-					piece.id === "wp4" ? console.log(piece) : console.log();
+					// piece.id === "wp4" ? console.log(piece) : console.log();
 					const x = piece.x * 48 - piece.xOffset + windowOffsetX;
 					const y = piece.y * 48 - piece.yOffset + windowOffsetY;
 					const isDragging = piece.id === state.dragging?.id;
@@ -618,7 +622,7 @@ export function Board() {
 							dragMomentum={false}
 							whileHover={{ scale: 1.3 }}
 							onTap={() => {
-								console.log("Piece Tap");
+								//console.log("Piece Tap");
 								const capturedPoint: Point = { x: piece.x, y: piece.y };
 								const capturingPiece = state.pieces.find(
 									(p) => p.id === tappedPiece?.id,

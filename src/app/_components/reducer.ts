@@ -23,7 +23,13 @@ export const initial: Board = {
 		[false, false, false, false, false, false, false, false],
 	],
 	dragging: undefined,
+	enPassantSquare: '',
 	whiteTurn: true,
+	halfTurns: 0,
+  blackKingsideCastling: true,
+  blackQueensideCastling: true,
+  whiteKingsideCastling: true,
+  whiteQueensideCastling: true,
 };
 
 export type Action =
@@ -425,6 +431,16 @@ export const reducer = (state: Board, action: Action) => {
 				nextState.pieces.splice(ind, 1);
 			}
 
+			// if a pawn moved two squares, set the square behind it as the enPassantSquare, else clear enPassantSquare
+			// nextState.enPassantSquare = '';
+			if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
+				console.log("enPassantSquare");
+				console.log("enPassantSquare");
+				console.log("enPassantSquare");
+				nextState.enPassantSquare += piece.x.toString();
+				nextState.enPassantSquare += ((piece.y + point.y) / 2).toString();
+			}
+			
 			piece.x = point.x;
 			piece.y = point.y;
 			piece.firstMove = false;
@@ -433,6 +449,22 @@ export const reducer = (state: Board, action: Action) => {
 			if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
 			if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
 
+			// check for castling (move king and rook)
+			
+			// set castling to false if rook or king has moved
+			if (piece.id === "br0") nextState.blackQueensideCastling = false; 
+			if (piece.id === "br1") nextState.blackKingsideCastling = false; 
+			if (piece.id === "wr0") nextState.whiteQueensideCastling = false; 
+			if (piece.id === "wr1") nextState.whiteKingsideCastling = false; 
+			if (piece.name === "bk") {
+				nextState.blackQueensideCastling = false; 
+				nextState.blackKingsideCastling = false; 
+			}
+			if (piece.name === "wk") {
+				nextState.whiteQueensideCastling = false; 
+				nextState.whiteKingsideCastling = false; 
+			}
+
 			nextState.whiteTurn = !nextState.whiteTurn;
 
 			const index = nextState.pieces.findIndex((i) => i.id === piece.id);
@@ -440,6 +472,7 @@ export const reducer = (state: Board, action: Action) => {
 
 			nextState.squares = setPieceToSquare(piece, nextState.squares);
 
+			console.log(nextState.enPassantSquare);
 			return nextState;
 		}
 		case "DRAG_STARTED": {

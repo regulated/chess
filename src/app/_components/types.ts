@@ -23,7 +23,13 @@ export type Board = {
     valid: boolean;
     offset: Point;
   };
+	enPassantSquare: string;
   whiteTurn: boolean;
+	halfTurns: number;
+  blackKingsideCastling: boolean;
+  blackQueensideCastling: boolean;
+  whiteKingsideCastling: boolean;
+  whiteQueensideCastling: boolean;
 };
 
 // dom location
