@@ -556,6 +556,31 @@ export const reducer = (state: Board, action: Action) => {
 				if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
 				if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
 
+			// if a pawn moved two squares, set the square behind it as the enPassantSquare, else clear enPassantSquare
+			// nextState.enPassantSquare = '';
+			if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
+				console.log("enPassantSquare");
+				console.log("enPassantSquare");
+				console.log("enPassantSquare");
+				nextState.enPassantSquare += piece.x.toString();
+				nextState.enPassantSquare += ((piece.y + point.y) / 2).toString();
+			}
+			// check for castling (move king and rook)
+			
+			// set castling to false if rook or king has moved
+			if (piece.id === "br0") nextState.blackQueensideCastling = false; 
+			if (piece.id === "br1") nextState.blackKingsideCastling = false; 
+			if (piece.id === "wr0") nextState.whiteQueensideCastling = false; 
+			if (piece.id === "wr1") nextState.whiteKingsideCastling = false; 
+			if (piece.name === "bk") {
+				nextState.blackQueensideCastling = false; 
+				nextState.blackKingsideCastling = false; 
+			}
+			if (piece.name === "wk") {
+				nextState.whiteQueensideCastling = false; 
+				nextState.whiteKingsideCastling = false; 
+			}
+
 				nextState.squares = setPieceToSquare(piece, nextState.squares);
 
 				const index = nextState.pieces.findIndex((i) => i.id === piece.id);
