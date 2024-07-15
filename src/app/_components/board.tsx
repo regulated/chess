@@ -524,8 +524,8 @@ export function Board() {
 		})
 	}
 
-	console.log(state);
-	console.log(format(state));
+	// console.log(state);
+	// console.log(format(state));
 
 	return (
 		<>
@@ -643,11 +643,11 @@ export function Board() {
 								);
 								// piece tapped to move
 								if (
-									(!isDragging &&
-										state.whiteTurn &&
-										piece.name.startsWith("w")) ||
-									(!state.whiteTurn && piece.name.startsWith("b"))
+									!isDragging &&
+									((state.whiteTurn && piece.name.startsWith("w")) ||
+									(!state.whiteTurn && piece.name.startsWith("b")))
 								) {
+									console.log("here1");
 									dispatch({ type: "CLEAR_TAP" });
 									setTapped(true);
 									setTappedPiece(piece);
@@ -662,6 +662,7 @@ export function Board() {
 									((state.whiteTurn && piece.name.startsWith("b")) ||
 										(!state.whiteTurn && piece.name.startsWith("w")))
 								) {
+									console.log("here2");
 									dispatch({ type: "CLEAR_TAP" });
 									setTapped(false);
 									dispatch({
@@ -669,6 +670,7 @@ export function Board() {
 										payload: { piece: capturingPiece, point: capturedPoint },
 									});
 								} else {
+									console.log("here3");
 									dispatch({ type: "CLEAR_TAP" });
 									setTapped(false);
 								}
@@ -679,12 +681,12 @@ export function Board() {
 								dispatch({ type: "DRAG_STARTED", payload: { piece } });
 							}}
 							onDragEnd={(_, info) => {
-								setTapped(false);
-								dispatch({ type: "CLEAR_TAP" });
 								const offset = {
 									x: info.offset.x,
 									y: info.offset.y,
 								};
+								setTapped(false);
+								dispatch({ type: "CLEAR_TAP" });
 								dispatch({ type: "DRAG_ENDED", payload: { piece, offset } });
 								dispatch({ type: "CHECKMATE" });
 							}}
@@ -720,7 +722,7 @@ export function Board() {
 								dispatch({ type: "ANIMATION_ENDED" });
 							}}
 							initial={false}
-							//animate={!isDragging}
+							// animate={!isDragging}
 							style={{
 								position: "absolute",
 								top: y,
