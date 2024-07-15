@@ -2,7 +2,7 @@
 
 import { useReducer, useEffect, useState } from "react";
 import { Button } from "@nextui-org/react";
-import { motion, useTransform } from "framer-motion";
+import { motion, useTransform, useDragControls, useAnimationControls } from "framer-motion";
 import {
 	whiteSquareStyle,
 	blackSquareStyle,
@@ -514,6 +514,16 @@ export function Board() {
 	const [tapped, setTapped] = useState(false);
 	const [tappedPiece, setTappedPiece] = useState<Piece>();
 
+	const dragControls = useDragControls();
+  const animationControls = useAnimationControls();
+
+	const onReset = () => {
+		animationControls.set({
+			x: 0,
+			y: 0,
+		})
+	}
+
 	console.log(state);
 	console.log(format(state));
 
@@ -609,7 +619,6 @@ export function Board() {
 					</>
 				)}
 				{state.pieces.map((piece) => {
-					// piece.id === "wp4" ? console.log(piece) : console.log();
 					const x = piece.x * 48 - piece.xOffset + windowOffsetX;
 					const y = piece.y * 48 - piece.yOffset + windowOffsetY;
 					const isDragging = piece.id === state.dragging?.id;
@@ -622,7 +631,8 @@ export function Board() {
 								(state.whiteTurn && piece.name.startsWith("w")) ||
 								(!state.whiteTurn && piece.name.startsWith("b"))
 							}
-							// dragSnapToOrigin={(!clear)}
+							dragControls={dragControls}
+							animate={animationControls}
 							dragMomentum={false}
 							whileHover={{ scale: 1.3 }}
 							onTap={() => {
@@ -710,7 +720,7 @@ export function Board() {
 								dispatch({ type: "ANIMATION_ENDED" });
 							}}
 							initial={false}
-							animate={!isDragging}
+							//animate={!isDragging}
 							style={{
 								position: "absolute",
 								top: y,
@@ -727,7 +737,9 @@ export function Board() {
 				className="items-center justify-center"
 				color="primary"
 				onClick={() => {
-					setClear(!clear)
+					onReset();
+					setClear(!clear);
+					/*
 					state.pieces.forEach((piece) => {
 						const p = document.getElementById(piece.id);
 						if (p) {
@@ -737,6 +749,7 @@ export function Board() {
 						piece.x = 0;
 						piece.y = 0;
 					})
+					*/
 				}}
 			>
 				Reset
