@@ -3,8 +3,8 @@ import { Piece, Squares, Board, Point } from "./types";
 // take existing board array and convert to FEN format
 export const format = (board: Board) => {
 	
-	let boardString: String = '';
-	let gap: number = 0;
+	let boardString = '';
+	let gap = 0;
 
 	// pieces
 	for (let i = 0; i < 8; i++) {

@@ -431,7 +431,8 @@ export const reducer = (state: Board, action: Action) => {
 				nextState.pieces.splice(ind, 1);
 			}
 
-			// if a pawn moved two squares, set the square behind it as the enPassantSquare, else clear enPassantSquare
+			// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
+			// else clear enPassantSquare
 			// nextState.enPassantSquare = '';
 			if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
 				console.log("enPassantSquare");
@@ -556,7 +557,8 @@ export const reducer = (state: Board, action: Action) => {
 				if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
 				if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
 
-			// if a pawn moved two squares, set the square behind it as the enPassantSquare, else clear enPassantSquare
+			// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
+			// else clear enPassantSquare
 			// nextState.enPassantSquare = '';
 			if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
 				console.log("enPassantSquare");
@@ -564,6 +566,7 @@ export const reducer = (state: Board, action: Action) => {
 				console.log("enPassantSquare");
 				nextState.enPassantSquare += piece.x.toString();
 				nextState.enPassantSquare += ((piece.y + point.y) / 2).toString();
+				console.log(nextState.enPassantSquare);
 			}
 			// check for castling (move king and rook)
 			

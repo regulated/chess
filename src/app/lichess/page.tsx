@@ -1,5 +1,5 @@
 import { Board } from "~/app/_components/board";
-import { Lichess } from "~/app/_components/lichess";
+import Lichess from "~/app/_components/lichess";
 
 export default async function Page() {
 	return (

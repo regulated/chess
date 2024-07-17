@@ -1,10 +1,8 @@
-Reset Button
-
 En Passant
 
 Castling
 Set a check for King and Rooks to see if they've moved
-Distinguish b/w left an right rook?
+Distinguish b/w left and right rook
 
 !!IMPORTANT
 PGN
