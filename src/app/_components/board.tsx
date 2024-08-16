@@ -512,6 +512,7 @@ export function Board() {
 	const [tapped, setTapped] = useState(false);
 	const [tappedPiece, setTappedPiece] = useState<Piece>();
 	const [evl, setEvl] = useState<string>('0');
+	const [move, setMove] = useState<string>('');
 
 	const dragControls = useDragControls();
   const animationControls = useAnimationControls();
@@ -530,7 +531,7 @@ export function Board() {
 			try {
 				const fen = format(state);
 				const response = await fetch(
-					'https://stockfish.online/api/s/v2.php?fen=' + fen + '&depth=8');
+					'https://stockfish.online/api/s/v2.php?fen=' + fen + '&depth=12');
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
@@ -538,6 +539,7 @@ export function Board() {
 				// Handle your data here
 				console.log(data);
 				setEvl(data.evaluation);
+				setMove(data.bestmove);
 			} catch (error) {
 				// Handle any errors here
 				console.error('There has been a problem with your fetch operation:', error);
@@ -762,9 +764,11 @@ export function Board() {
 				>
 					Reset
 				</Button>
-				<div></div>
-				<div className="text-white">
-					{evl}
+				<div className="text-white items-center justify-center">
+					Eval: {evl}
+				</div>
+				<div className="text-white items-center justify-center">
+					Move: {move}
 				</div>
 			</div>
 		</>

@@ -21,7 +21,7 @@ Current Idea
 Lichess game, and implement an eval bar based on current game state
 backwards and forward buttons
 
-!! Convert current board array into stockfish eval / pgn format
+!! Convert current board array into FEN format
 
 I'm a bit late, but https://stockfish.online is a REST GET API for Stockfish. 
 Make requests with a FEN string, depth, and mode. 
