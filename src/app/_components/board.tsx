@@ -511,6 +511,7 @@ export function Board() {
 
 	const [tapped, setTapped] = useState(false);
 	const [tappedPiece, setTappedPiece] = useState<Piece>();
+	const [evl, setEvl] = useState<string>('0');
 
 	const dragControls = useDragControls();
   const animationControls = useAnimationControls();
@@ -522,23 +523,28 @@ export function Board() {
 		})
 	}
 
-	const fetchData = async (): Promise<string> => {
-		try {
-			const fen = format(state);
-			const response = await fetch('https://stockfish.online/api/stockfish.php?fen=' + fen + '&depth=8&mode=eval');
-			if (!response.ok) {
-				throw new Error('Network response was not ok');
+	useEffect(() => {
+		if (format(state) === '8/8/8/8/8/8/8/8 w KQkq - 0 1') return;
+		console.log(format(state));
+		const fetchData = async (): Promise<void> => {
+			try {
+				const fen = format(state);
+				const response = await fetch(
+					'https://stockfish.online/api/s/v2.php?fen=' + fen + '&depth=8');
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				const data = await response.json();
+				// Handle your data here
+				console.log(data);
+				setEvl(data.evaluation);
+			} catch (error) {
+				// Handle any errors here
+				console.error('There has been a problem with your fetch operation:', error);
 			}
-			const data = await response.json();
-			// Handle your data here
-			console.log(data);
-			return data;
-		} catch (error) {
-			// Handle any errors here
-			console.error('There has been a problem with your fetch operation:', error);
-			return 'error';
 		}
-	}
+		fetchData();
+	}, [state.whiteTurn])
 
 	return (
 		<>
@@ -745,7 +751,7 @@ export function Board() {
 					);
 				})}
 			</div>
-			<div>
+			<div className="grid items-center justify-center grid-cols-3">
 				<Button
 					className="items-center justify-center"
 					color="primary"
@@ -756,8 +762,9 @@ export function Board() {
 				>
 					Reset
 				</Button>
-				<div>
-					{fetchData()}
+				<div></div>
+				<div className="text-white">
+					{evl}
 				</div>
 			</div>
 		</>
