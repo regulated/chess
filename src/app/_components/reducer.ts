@@ -1,4 +1,5 @@
 import { Piece, Squares, Board, Point } from "./types";
+import { format } from "./format"
 
 export const initial: Board = {
 	pieces: [],
@@ -26,6 +27,7 @@ export const initial: Board = {
 	enPassantSquare: '',
 	whiteTurn: true,
 	halfTurns: 0,
+	fullTurns: 1,
   blackKingsideCastling: true,
   blackQueensideCastling: true,
   whiteKingsideCastling: true,
@@ -384,6 +386,8 @@ export const reducer = (state: Board, action: Action) => {
 			}
 			nextState.dragging = undefined;
 			nextState.whiteTurn = true;
+			nextState.halfTurns = 0;
+			nextState.fullTurns = 1;
 
 			return nextState;
 		}
@@ -429,17 +433,17 @@ export const reducer = (state: Board, action: Action) => {
 					(p) => p.x === point.x && p.y === point.y,
 				);
 				nextState.pieces.splice(ind, 1);
+				nextState.halfTurns = -1;
 			}
+
+			// if a pawn moved reset half turn counter
+			if (piece.name.charAt(1) === 'p') nextState.halfTurns = -1;
 
 			// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
 			// else clear enPassantSquare
-			// nextState.enPassantSquare = '';
+			nextState.enPassantSquare = '';
 			if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
-				console.log("enPassantSquare");
-				console.log("enPassantSquare");
-				console.log("enPassantSquare");
-				nextState.enPassantSquare += piece.x.toString();
-				nextState.enPassantSquare += ((piece.y + point.y) / 2).toString();
+				nextState.enPassantSquare = piece.x.toString() + ((piece.y + point.y) / 2).toString();
 			}
 			
 			piece.x = point.x;
@@ -467,13 +471,14 @@ export const reducer = (state: Board, action: Action) => {
 			}
 
 			nextState.whiteTurn = !nextState.whiteTurn;
+			if (nextState.whiteTurn) nextState.fullTurns += 1;
+			nextState.halfTurns += 1;
 
 			const index = nextState.pieces.findIndex((i) => i.id === piece.id);
 			nextState.pieces[index] = piece;
 
 			nextState.squares = setPieceToSquare(piece, nextState.squares);
 
-			console.log(nextState.enPassantSquare);
 			return nextState;
 		}
 		case "DRAG_STARTED": {
@@ -512,12 +517,14 @@ export const reducer = (state: Board, action: Action) => {
 				const { valid, initialPoint, nextPoint } = nextState.dragging;
 				const point = valid ? nextPoint : initialPoint;
 
-				// to cancel out double call
+				// to cancel out double call in dev
 				if (piece.moved && valid) {
 					nextState.whiteTurn = !nextState.whiteTurn;
+					if (nextState.whiteTurn) nextState.fullTurns += 1;
+					nextState.halfTurns += 1;
 					return nextState;
 				}
-				if (piece.moved) {
+				if (piece.moved && !valid) {
 					return nextState;
 				}
 
@@ -529,9 +536,19 @@ export const reducer = (state: Board, action: Action) => {
 					piece.moved = true;
 					// nextState.valid = false;
 					// nextState.whiteTurn = !nextState.whiteTurn;
+					// if (nextState.whiteTurn) nextState.fullTurns += 1;
+					// nextState.halfTurns += 1;
 					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
 					nextState.pieces[index] = piece;
 					return nextState;
+				}
+
+				// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
+				// else clear enPassantSquare
+				nextState.enPassantSquare = '';
+				if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
+					nextState.enPassantSquare = 
+						piece.x.toString() + ((piece.y + point.y) / 2).toString();
 				}
 
 				// check if there is a piece on that square already
@@ -541,6 +558,7 @@ export const reducer = (state: Board, action: Action) => {
 						(p) => p.x === point.x && p.y === point.y,
 					);
 					nextState.pieces.splice(ind, 1);
+					nextState.halfTurns = -1;
 				}
 
 				nextState.squares = clearPieceFromSquare(piece, nextState.squares);
@@ -553,21 +571,13 @@ export const reducer = (state: Board, action: Action) => {
 				piece.moved = true;
 				piece.firstMove = false;
 
+				// if a pawn moved reset half turn counter
+				if (piece.name.charAt(1) === 'p') nextState.halfTurns = -1;
+
 				// check for promotion
 				if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
 				if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
 
-			// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
-			// else clear enPassantSquare
-			// nextState.enPassantSquare = '';
-			if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
-				console.log("enPassantSquare");
-				console.log("enPassantSquare");
-				console.log("enPassantSquare");
-				nextState.enPassantSquare += piece.x.toString();
-				nextState.enPassantSquare += ((piece.y + point.y) / 2).toString();
-				console.log(nextState.enPassantSquare);
-			}
 			// check for castling (move king and rook)
 			
 			// set castling to false if rook or king has moved
@@ -590,12 +600,15 @@ export const reducer = (state: Board, action: Action) => {
 				nextState.pieces[index] = piece;
 
 				nextState.whiteTurn = !nextState.whiteTurn;
+				if (nextState.whiteTurn) nextState.fullTurns += 1;
+				nextState.halfTurns += 1;
 
 				return nextState;
 			}
 
 			return nextState;
-		}
+			}
+
 		case "ANIMATION_ENDED": {
 			const nextState = { ...state };
 

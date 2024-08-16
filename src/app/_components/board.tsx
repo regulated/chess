@@ -522,8 +522,23 @@ export function Board() {
 		})
 	}
 
-	console.log(state);
-	console.log(format(state));
+	const fetchData = async (): Promise<string> => {
+		try {
+			const fen = format(state);
+			const response = await fetch('https://stockfish.online/api/stockfish.php?fen=' + fen + '&depth=8&mode=eval');
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			const data = await response.json();
+			// Handle your data here
+			console.log(data);
+			return data;
+		} catch (error) {
+			// Handle any errors here
+			console.error('There has been a problem with your fetch operation:', error);
+			return 'error';
+		}
+	}
 
 	return (
 		<>
@@ -713,6 +728,8 @@ export function Board() {
 							}}
 							onAnimationComplete={() => {
 								dispatch({ type: "ANIMATION_ENDED" });
+								// console.log(state);
+								// console.log(format(state));
 							}}
 							initial={false}
 							// animate={!isDragging}
@@ -728,16 +745,21 @@ export function Board() {
 					);
 				})}
 			</div>
-			<Button
-				className="items-center justify-center"
-				color="primary"
-				onClick={() => {
-					onReset();
-					setClear(!clear);
-				}}
-			>
-				Reset
-			</Button>
+			<div>
+				<Button
+					className="items-center justify-center"
+					color="primary"
+					onClick={() => {
+						onReset();
+						setClear(!clear);
+					}}
+				>
+					Reset
+				</Button>
+				<div>
+					{fetchData()}
+				</div>
+			</div>
 		</>
 	);
 }

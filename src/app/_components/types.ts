@@ -26,6 +26,7 @@ export type Board = {
 	enPassantSquare: string;
   whiteTurn: boolean;
 	halfTurns: number;
+	fullTurns: number;
   blackKingsideCastling: boolean;
   blackQueensideCastling: boolean;
   whiteKingsideCastling: boolean;

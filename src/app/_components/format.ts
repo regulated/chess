@@ -1,6 +1,11 @@
-import { Piece, Squares, Board, Point } from "./types";
+import { Board } from "./types";
 
 // take existing board array and convert to FEN format
+// example FEN after 1. e4 c5 2. nf3 
+// 	rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+// 	rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1
+// 	rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2
+// 	rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2
 export const format = (board: Board) => {
 	
 	let boardString = '';
@@ -50,7 +55,6 @@ export const format = (board: Board) => {
 			!board.blackQueensideCastling) boardString += '-';
 	
 	// en passant target square
-	console.log("eps: " + board.enPassantSquare)
 	if (board.enPassantSquare != '') {
 	boardString += ' ' + board.enPassantSquare ;
 	}
@@ -60,6 +64,7 @@ export const format = (board: Board) => {
 	boardString += ' ' + board.halfTurns.toString();
 	
 	// full turns 
+	boardString += ' ' + board.fullTurns.toString();
 
 	return boardString;
 } 
