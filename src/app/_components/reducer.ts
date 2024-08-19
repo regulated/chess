@@ -442,7 +442,8 @@ export const reducer = (state: Board, action: Action) => {
 			// else clear enPassantSquare
 			nextState.enPassantSquare = '';
 			if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
-				nextState.enPassantSquare = piece.x.toString() + ((piece.y + point.y) / 2).toString();
+				nextState.enPassantSquare = 
+					String.fromCharCode(piece.x + 97) + (8 - (piece.y + point.y) / 2).toString();
 			}
 			
 			piece.x = point.x;

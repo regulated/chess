@@ -56,7 +56,7 @@ export const format = (board: Board) => {
 	
 	// en passant target square
 	if (board.enPassantSquare != '') {
-	boardString += ' ' + board.enPassantSquare ;
+		boardString += ' ' + board.enPassantSquare;
 	}
 	else boardString += ' -';
 	
