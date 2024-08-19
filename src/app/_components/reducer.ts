@@ -548,7 +548,7 @@ export const reducer = (state: Board, action: Action) => {
 				nextState.enPassantSquare = '';
 				if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
 					nextState.enPassantSquare = 
-						piece.x.toString() + ((piece.y + point.y) / 2).toString();
+						String.fromCharCode(piece.x + 97) + (8 - (piece.y + point.y) / 2).toString();
 				}
 
 				// check if there is a piece on that square already

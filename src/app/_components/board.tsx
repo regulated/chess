@@ -534,14 +534,18 @@ export function Board() {
 				const fen = format(state);
 				const response = await fetch(
 					'https://stockfish.online/api/s/v2.php?fen=' + fen + '&depth=12');
+
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
+
 				const data: Res = await response.json();
-				// Handle your data here
+
 				console.log(data);
+
 				if (data.evaluation !== undefined) setEvl(data.evaluation);
-				if (data.bestmove !== undefined) setMove(data.bestmove);
+				if (data.bestmove !== undefined) setMove(data.bestmove.slice(9, 14));
+
 			} catch (error) {
 				// Handle any errors here
 				console.error('There has been a problem with your fetch operation:', error);
@@ -551,11 +555,7 @@ export function Board() {
 		}
 
 		fetchData()
-			// .then((data) => {
-			// 	setEvl(data.evaluation);
-			// 	setMove(data.bestmove);
-			// })
-			.catch((error) => {console.log(error)});
+			.catch((error) => {console.log(error)}); 
 	}, [state.whiteTurn])
 
 	return (
@@ -762,24 +762,23 @@ export function Board() {
 						></motion.img>
 					);
 				})}
-			</div>
-			<div className="grid items-center justify-center grid-cols-3">
-				<Button
-					className="items-center justify-center"
-					color="primary"
-					onClick={() => {
-						onReset();
-						setClear(!clear);
-					}}
-				>
-					Reset
-				</Button>
-				<div className="text-white items-center justify-center">
-					Eval: {evl}
 				</div>
-				<div className="text-white items-center justify-center">
-					Move: {move}
-				</div>
+				<div className="absolute -mt-10 w-full grid place-items-center gap-6 grid-cols-3">
+					<Button
+						color="primary"
+						onClick={() => {
+							onReset();
+							setClear(!clear);
+						}}
+					>
+						Reset
+					</Button>
+					<h2 className="text-white">
+						Eval: {evl}
+					</h2>
+					<h2 className="text-white">
+						Best Move: {move}
+					</h2>
 			</div>
 		</>
 	);
