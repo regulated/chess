@@ -9,6 +9,14 @@ export interface Piece {
   firstMove: boolean;
 }
 
+export interface Res {
+	success: boolean;
+	evaluation: string;
+	mate: boolean;
+	bestmove: string;
+	continuation: string;
+}
+
 // 8x8 grid of square names should be lower case ex e4 d5
 export type Squares = string[][];
 

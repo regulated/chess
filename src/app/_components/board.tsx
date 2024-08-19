@@ -11,7 +11,7 @@ import {
 } from "../../styles/boardStyles";
 import { reducer, initial } from "./reducer";
 import useScreenSize from "./useScreenSize";
-import { Piece, Point } from "./types";
+import type { Piece, Point, Res } from "./types";
 import { format } from "./format";
 
 export function Board() {
@@ -525,9 +525,11 @@ export function Board() {
 	}
 
 	useEffect(() => {
+
 		if (format(state) === '8/8/8/8/8/8/8/8 w KQkq - 0 1') return;
 		console.log(format(state));
-		const fetchData = async (): Promise<void> => {
+
+		async function fetchData(): Promise<void> {
 			try {
 				const fen = format(state);
 				const response = await fetch(
@@ -535,17 +537,25 @@ export function Board() {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
-				const data = await response.json();
+				const data: Res = await response.json();
 				// Handle your data here
 				console.log(data);
-				setEvl(data.evaluation);
-				setMove(data.bestmove);
+				if (data.evaluation !== undefined) setEvl(data.evaluation);
+				if (data.bestmove !== undefined) setMove(data.bestmove);
 			} catch (error) {
 				// Handle any errors here
 				console.error('There has been a problem with your fetch operation:', error);
+				setEvl('');
+				setMove('');
 			}
 		}
-		fetchData();
+
+		fetchData()
+			// .then((data) => {
+			// 	setEvl(data.evaluation);
+			// 	setMove(data.bestmove);
+			// })
+			.catch((error) => {console.log(error)});
 	}, [state.whiteTurn])
 
 	return (

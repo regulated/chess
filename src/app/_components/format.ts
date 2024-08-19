@@ -1,4 +1,4 @@
-import { Board } from "./types";
+import type { Board } from "./types";
 
 // take existing board array and convert to FEN format
 // example FEN after 1. e4 c5 2. nf3 

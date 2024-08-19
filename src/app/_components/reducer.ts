@@ -1,5 +1,4 @@
-import { Piece, Squares, Board, Point } from "./types";
-import { format } from "./format"
+import type { Piece, Squares, Board, Point } from "./types";
 
 export const initial: Board = {
 	pieces: [],
