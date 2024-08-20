@@ -16,6 +16,7 @@ import { format } from "./format";
 
 export function Board() {
 	const [state, dispatch] = useReducer(reducer, initial);
+	//const [states, setStates] = useState<Board[]>([]);
 
 	const [clear, setClear] = useState(false);
 
@@ -557,6 +558,10 @@ export function Board() {
 		fetchData()
 			.catch((error) => {console.log(error)}); 
 	}, [state.whiteTurn])
+
+	// useEffect(() => {
+	// 	setStates(state)		
+	// }, [state.whiteTurn])
 
 	return (
 		<>

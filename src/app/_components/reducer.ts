@@ -44,6 +44,7 @@ export type Action =
 	| { type: "DRAG_ENDED"; payload: { piece: Piece; offset: Point } }
 	| { type: "ANIMATION_ENDED" }
 	| { type: "CHECKMATE" };
+	// | { type: "MOVE_STATE"; payload: { board: Board } };
 
 export const reducer = (state: Board, action: Action) => {
 	function clearPieceFromSquare(piece: Piece, squares: Squares) {
@@ -641,6 +642,14 @@ export const reducer = (state: Board, action: Action) => {
 
 			return state;
 		}
+
+		// case "MOVE_STATE": {
+		// 	const diffState =  { ...action.payload };
+
+		// 	return diffState;
+			
+		// }
+
 		default: {
 			return state;
 		}

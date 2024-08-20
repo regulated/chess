@@ -6,6 +6,7 @@ export const boardStyle = "absolute grid-rows-8 grid grid-cols-8 h-24 w-24";
 export const wrapper =
 	"relative overflow-hidden flex items-center justify-center w-screen h-screen";
 export const pieceStyle = "h-6 w-6";
+export const bar = "-ml-10 h-24 w-6 bg-black";
 
 /*
  * 6 = 48px
