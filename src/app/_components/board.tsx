@@ -8,6 +8,9 @@ import {
 	blackSquareStyle,
 	boardStyle,
 	wrapper,
+	footer,
+	evalWrapper,
+	evalBar,
 } from "../../styles/boardStyles";
 import { reducer, initial } from "./reducer";
 import useScreenSize from "./useScreenSize";
@@ -767,8 +770,10 @@ export function Board() {
 						></motion.img>
 					);
 				})}
-				</div>
-				<div className="absolute -mt-10 w-full grid place-items-center gap-6 grid-cols-3">
+				{//<div className="absolute -mt-10 ml-12 w-24 grid place-items-center gap-6 grid-cols-3">
+				// was working on the outside of the div, trying to move it inside the wrapper now
+			}
+				<div className={footer}>
 					<Button
 						color="primary"
 						onClick={() => {
@@ -778,12 +783,23 @@ export function Board() {
 					>
 						Reset
 					</Button>
-					<h2 className="text-white">
+					<p className="text-white">
 						Eval: {evl}
-					</h2>
-					<h2 className="text-white">
+					</p>
+					<p className="text-white">
 						Best Move: {move}
-					</h2>
+					</p>
+				</div>
+				<div className={evalWrapper}>
+					<div className={evalBar}>
+						<div style={{
+							height: (192 - (Number(evl) * 12)),
+							backgroundColor: "black",
+						}}>
+							
+						</div>
+					</div>
+				</div>
 			</div>
 		</>
 	);

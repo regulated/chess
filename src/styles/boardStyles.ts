@@ -1,12 +1,14 @@
+export const wrapper =
+	"relative overflow-hidden flex items-center justify-center w-screen h-screen";
+export const boardStyle = "absolute grid grid-rows-8 grid-cols-8 h-24 w-24";
 export const whiteSquareStyle =
 	"flex justify-center items-center bg-slate-200 h-6 w-6";
 export const blackSquareStyle =
 	"flex justify-center items-center bg-slate-600 h-6 w-6";
-export const boardStyle = "absolute grid-rows-8 grid grid-cols-8 h-24 w-24";
-export const wrapper =
-	"relative overflow-hidden flex items-center justify-center w-screen h-screen";
 export const pieceStyle = "h-6 w-6";
-export const bar = "-ml-10 h-24 w-6 bg-black";
+export const footer = "absolute mt-24 pt-8 w-24 grid gap-4 grid-cols-3";
+export const evalWrapper = "absolute ml-24 pl-6 h-24 w-6";
+export const evalBar = "h-24 w-6 bg-white";
 
 /*
  * 6 = 48px
