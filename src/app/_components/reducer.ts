@@ -43,8 +43,8 @@ export type Action =
 	| { type: "DRAG_MOVED"; payload: { piece: Piece; point: Point } }
 	| { type: "DRAG_ENDED"; payload: { piece: Piece; offset: Point } }
 	| { type: "ANIMATION_ENDED" }
-	| { type: "CHECKMATE" };
-	// | { type: "MOVE_STATE"; payload: { board: Board } };
+	| { type: "CHECKMATE" }
+	| { type: "MOVE_STATE"}; // payload: { board: Board } };
 
 export const reducer = (state: Board, action: Action) => {
 	function clearPieceFromSquare(piece: Piece, squares: Squares) {
@@ -64,6 +64,7 @@ export const reducer = (state: Board, action: Action) => {
 		point: Point,
 		squares: Squares,
 		depth: number,
+		eps: string,
 	) {
 		/*
 		 * check that it is the right side's turn
@@ -275,10 +276,17 @@ export const reducer = (state: Board, action: Action) => {
 					squares[point.y][point.x] === ""
 				)
 					valid = true;
+				// console.log("eps 0: " + (eps.charCodeAt(0) - 97))
+				// console.log("eps 1: " + (8 - Number(eps.charAt(1))))
+				// console.log("point.x: " + point.x)
+				// console.log("point.y: " + point.y)
 				if (
 					Math.abs(piece.x - point.x) === 1 &&
 					piece.y - 1 === point.y &&
-					squares[point.y][point.x].startsWith("b")
+					(squares[point.y][point.x].startsWith("b") || 
+						(eps !== '' && 
+							(eps.charCodeAt(0) - 97) === point.x && 
+							(8 - Number(eps.charAt(1))) === point.y))
 				)
 					valid = true;
 
@@ -302,7 +310,10 @@ export const reducer = (state: Board, action: Action) => {
 				if (
 					Math.abs(piece.x - point.x) === 1 &&
 					piece.y + 1 === point.y &&
-					squares[point.y][point.x].startsWith("w")
+					(squares[point.y][point.x].startsWith("w") ||
+						(eps !== '' 
+							&& (eps.charCodeAt(0) - 97) === point.x 
+							&& (8 - Number(eps.charAt(1))) === point.y))
 				)
 					valid = true;
 
@@ -350,7 +361,7 @@ export const reducer = (state: Board, action: Action) => {
 			state.pieces.forEach((p) => {
 				if (
 					!p.name.startsWith(currentKing.name.charAt(0)) &&
-					isValid(p, currentKingPoint, tempSquares, 0) &&
+					isValid(p, currentKingPoint, tempSquares, 0, state.enPassantSquare) &&
 					(point.x !== p.x || point.y !== p.y)
 				) {
 					valid = false;
@@ -387,7 +398,12 @@ export const reducer = (state: Board, action: Action) => {
 			nextState.dragging = undefined;
 			nextState.whiteTurn = true;
 			nextState.halfTurns = 0;
-			nextState.fullTurns = 1;
+			nextState.fullTurns = 1; 
+			nextState.enPassantSquare = '';
+			nextState.blackKingsideCastling = true;
+			nextState.blackQueensideCastling = true;
+			nextState.whiteKingsideCastling = true;
+			nextState.whiteQueensideCastling = true;
 
 			return nextState;
 		}
@@ -401,7 +417,7 @@ export const reducer = (state: Board, action: Action) => {
 
 			for (let y = 0; y <= 7; y++) {
 				for (let x = 0; x <= 7; x++) {
-					if (isValid(piece, { x, y }, nextState.squares, 1)) {
+					if (isValid(piece, { x, y }, nextState.squares, 1, nextState.enPassantSquare)) {
 						nextState.validSquares[y][x] = true;
 					}
 				}
@@ -434,6 +450,16 @@ export const reducer = (state: Board, action: Action) => {
 				);
 				nextState.pieces.splice(ind, 1);
 				nextState.halfTurns = -1;
+			}
+
+			// check if the square is the enPassantSquare
+			// if so remove the pawn in front of the square
+			if (point.x === (nextState.enPassantSquare.charCodeAt(0) - 97) && 
+					point.y === (8 - Number(nextState.enPassantSquare.charAt(1)))) {
+				const ind = nextState.pieces.findIndex(
+					(p) => p.x === point.x && (p.y === point.y + 1 || p.y === point.y - 1),
+				);
+				nextState.pieces.splice(ind, 1);
 			}
 
 			// if a pawn moved reset half turn counter
@@ -505,7 +531,7 @@ export const reducer = (state: Board, action: Action) => {
 
 			if (nextState.dragging) {
 				nextState.dragging.nextPoint = point;
-				nextState.dragging.valid = isValid(piece, point, nextState.squares, 1);
+				nextState.dragging.valid = isValid(piece, point, nextState.squares, 1, nextState.enPassantSquare);
 			}
 
 			return nextState;
@@ -544,13 +570,6 @@ export const reducer = (state: Board, action: Action) => {
 					return nextState;
 				}
 
-				// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
-				// else clear enPassantSquare
-				nextState.enPassantSquare = '';
-				if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
-					nextState.enPassantSquare = 
-						String.fromCharCode(piece.x + 97) + (8 - (piece.y + point.y) / 2).toString();
-				}
 
 				// check if there is a piece on that square already
 				// if move is valid, the piece is captured and removed from state.pieces[]
@@ -562,7 +581,25 @@ export const reducer = (state: Board, action: Action) => {
 					nextState.halfTurns = -1;
 				}
 
+				// check if the square is the enPassantSquare
+				// if so remove the pawn in front of the square
+				if (point.x === (nextState.enPassantSquare.charCodeAt(0) - 97) && 
+						point.y === (8 - Number(nextState.enPassantSquare.charAt(1)))) {
+					const ind = nextState.pieces.findIndex(
+						(p) => p.x === point.x && (p.y === point.y + 1 || p.y === point.y - 1),
+					);
+					nextState.pieces.splice(ind, 1);
+				}
+
 				nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+
+				// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
+				// else clear enPassantSquare
+				nextState.enPassantSquare = '';
+				if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
+					nextState.enPassantSquare = 
+						String.fromCharCode(piece.x + 97) + (8 - (piece.y + point.y) / 2).toString();
+				}
 
 				piece.x = point.x;
 				piece.y = point.y;
@@ -627,7 +664,7 @@ export const reducer = (state: Board, action: Action) => {
 				) {
 					for (let y = 0; y <= 7; y++) {
 						for (let x = 0; x <= 7; x++) {
-							if (isValid(p, { x, y }, state.squares, 1)) {
+							if (isValid(p, { x, y }, state.squares, 1, state.enPassantSquare)) {
 								mate = false;
 							}
 						}
