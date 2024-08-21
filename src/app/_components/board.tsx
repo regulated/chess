@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useEffect, useState } from "react";
+import { useReducer, useEffect, useState, useRef } from "react";
 import { Button } from "@nextui-org/react";
 import { motion, useDragControls, useAnimationControls } from "framer-motion";
 import {
@@ -517,6 +517,8 @@ export function Board() {
 	const [tappedPiece, setTappedPiece] = useState<Piece>();
 	const [evl, setEvl] = useState<string>('0');
 	const [move, setMove] = useState<string>('');
+	// const [mateIn, setMateIn] = useState(0);
+	const [whiteMate, setWhiteMate] = useState(0);
 
 	const dragControls = useDragControls();
   const animationControls = useAnimationControls();
@@ -549,18 +551,32 @@ export function Board() {
 
 				if (data.evaluation !== undefined) setEvl(data.evaluation);
 				if (data.bestmove !== undefined) setMove(data.bestmove.slice(9, 14));
+				if (data.mate !== undefined && data.mate !== null) setWhiteMate(data.mate);
+				else setWhiteMate(0);
 
 			} catch (error) {
 				// Handle any errors here
 				console.error('There has been a problem with your fetch operation:', error);
 				setEvl('');
 				setMove('');
+				setWhiteMate(0);
 			}
 		}
 
 		fetchData()
 			.catch((error) => {console.log(error)}); 
 	}, [state.whiteTurn])
+
+	console.log(whiteMate);
+
+	// useEffect(() => {
+	// 	if (mateIn === 1) {
+	// 		whiteMate.current = true;	
+	// 	}
+	// 	else if (mateIn === -1) {
+	// 		whiteMate.current = false;
+	// 	}
+	// }, [mateIn])
 
 	// useEffect(() => {
 	// 	setStates(state)		
@@ -784,19 +800,20 @@ export function Board() {
 						Reset
 					</Button>
 					<p className="text-white">
-						Eval: {evl}
+						Best Move: {move}
 					</p>
 					<p className="text-white">
-						Best Move: {move}
+					Eval: {evl}
 					</p>
 				</div>
 				<div className={evalWrapper}>
 					<div className={evalBar}>
 						<div style={{
-							height: (192 - (Number(evl) * 12)),
+							height: (whiteMate === 0) ? 
+								Math.min(Math.max((192 - (Number(evl) * 12)), 0), 384) : 
+								((whiteMate < 0) ? 384 : 0),
 							backgroundColor: "black",
 						}}>
-							
 						</div>
 					</div>
 				</div>

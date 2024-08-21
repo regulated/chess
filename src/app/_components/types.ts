@@ -12,7 +12,7 @@ export interface Piece {
 export interface Res {
 	success: boolean;
 	evaluation: string;
-	mate: boolean;
+	mate: number;
 	bestmove: string;
 	continuation: string;
 }
