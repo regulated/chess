@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useEffect, useState, useRef } from "react";
+import { useReducer, useEffect, useState } from "react";
 import { Button } from "@nextui-org/react";
 import { motion, useDragControls, useAnimationControls } from "framer-motion";
 import {
@@ -567,17 +567,6 @@ export function Board() {
 			.catch((error) => {console.log(error)}); 
 	}, [state.whiteTurn])
 
-	console.log(whiteMate);
-
-	// useEffect(() => {
-	// 	if (mateIn === 1) {
-	// 		whiteMate.current = true;	
-	// 	}
-	// 	else if (mateIn === -1) {
-	// 		whiteMate.current = false;
-	// 	}
-	// }, [mateIn])
-
 	// useEffect(() => {
 	// 	setStates(state)		
 	// }, [state.whiteTurn])
@@ -668,6 +657,7 @@ export function Board() {
 								width: 48,
 								height: 48,
 								borderRadius: "6px",
+								zIndex: 10,
 							}}
 						/>
 					</>
@@ -781,7 +771,7 @@ export function Board() {
 								left: x,
 								height: 48,
 								width: 48,
-								zIndex: isDragging ? 99 : 1,
+								zIndex: isDragging ? 99 : 11,
 							}}
 						></motion.img>
 					);
