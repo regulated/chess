@@ -800,7 +800,7 @@ export function Board() {
 					<div className={evalBar}>
 						<div style={{
 							height: (whiteMate === 0) ? 
-								Math.min(Math.max((192 - (Number(evl) * 12)), 0), 384) : 
+								Math.min(Math.max((192 - (Number(evl) * 19)), 0), 384) : 
 								((whiteMate < 0) ? 384 : 0),
 							backgroundColor: "black",
 						}}>

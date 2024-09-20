@@ -1,7 +1,3 @@
-En Passant
-set eps as a valid capture square for pawns
-remove passed pawn on capture
-
 Castling
 Set a check for King and Rooks to see if they've moved
 Distinguish b/w left and right rook
