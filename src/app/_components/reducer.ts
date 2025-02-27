@@ -472,16 +472,15 @@ export const reducer = (state: Board, action: Action) => {
 					const rook = nextState.pieces[rookIndex];
 					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
 
+					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+					nextState.squares = clearPieceFromSquare(rook, nextState.squares);
+
 					piece.x = point.x;
 					piece.y = point.y;
 					piece.firstMove = false;
 
 					rook.x = 3;
-					rook.y = rook.y;
 					rook.firstMove = false;
-
-					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
-					nextState.squares = clearPieceFromSquare(nextState.pieces[rookIndex], nextState.squares);
 
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
@@ -508,16 +507,15 @@ export const reducer = (state: Board, action: Action) => {
 					const rook = nextState.pieces[rookIndex];
 					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
 
+					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+					nextState.squares = clearPieceFromSquare(rook, nextState.squares);
+
 					piece.x = point.x;
 					piece.y = point.y;
 					piece.firstMove = false;
 
 					rook.x = 5;
-					rook.y = rook.y;
 					rook.firstMove = false;
-
-					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
-					nextState.squares = clearPieceFromSquare(nextState.pieces[rookIndex], nextState.squares);
 
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
@@ -544,16 +542,16 @@ export const reducer = (state: Board, action: Action) => {
 					const rook = nextState.pieces[rookIndex];
 					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
 
+        nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+        nextState.squares = clearPieceFromSquare(rook, nextState.squares);
+
 					piece.x = point.x;
 					piece.y = point.y;
 					piece.firstMove = false;
 
 					rook.x = 3;
-					rook.y = rook.y;
 					rook.firstMove = false;
 
-					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
-					nextState.squares = clearPieceFromSquare(nextState.pieces[rookIndex], nextState.squares);
 
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
@@ -580,16 +578,19 @@ export const reducer = (state: Board, action: Action) => {
 					const rook = nextState.pieces[rookIndex];
 					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
 
+        console.log(piece);
+        console.log(rook);
+
+					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+					nextState.squares = clearPieceFromSquare(rook, nextState.squares);
+
 					piece.x = point.x;
 					piece.y = point.y;
 					piece.firstMove = false;
 
 					rook.x = 5;
-					rook.y = rook.y;
 					rook.firstMove = false;
 
-					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
-					nextState.squares = clearPieceFromSquare(nextState.pieces[rookIndex], nextState.squares);
 
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
@@ -603,6 +604,13 @@ export const reducer = (state: Board, action: Action) => {
 
           nextState.whiteKingsideCastling = false;
           nextState.whiteQueensideCastling = false;
+
+        console.log(piece);
+        console.log(rook);
+
+        console.log(nextState);
+        console.log(nextState.squares);
+
 
 					return nextState;
 
