@@ -533,7 +533,7 @@ export function Board() {
 	useEffect(() => {
 
 		if (format(state) === '8/8/8/8/8/8/8/8 w KQkq - 0 1') return;
-		console.log(format(state));
+		//console.log(format(state));
 
 		async function fetchData(): Promise<void> {
 			try {
@@ -547,7 +547,7 @@ export function Board() {
 
 				const data: Res = await response.json();
 
-				console.log(data);
+				//console.log(data);
 
 				if (data.evaluation !== undefined) setEvl(data.evaluation);
 				if (data.bestmove !== undefined) setMove(data.bestmove.slice(9, 14));
@@ -760,8 +760,6 @@ export function Board() {
 							}}
 							onAnimationComplete={() => {
 								dispatch({ type: "ANIMATION_ENDED" });
-								// console.log(state);
-								// console.log(format(state));
 							}}
 							initial={false}
 							// animate={!isDragging}
