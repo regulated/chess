@@ -41,51 +41,51 @@ export function Board() {
 				},
 			},
 		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bn0",
-					name: "bn",
-					x: 1,
-					y: 0,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bb0",
-					name: "bb",
-					x: 2,
-					y: 0,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bq0",
-					name: "bq",
-					x: 3,
-					y: 0,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
+		 dispatch({
+		 	type: "ADD_PIECE",
+		 	payload: {
+		 		piece: {
+		 			id: "bn0",
+		 			name: "bn",
+		 			x: 1,
+		 			y: 0,
+		 			xOffset: 0,
+		 			yOffset: 0,
+		 			moved: false,
+		 			firstMove: true,
+		 		},
+		 	},
+		 });
+		 dispatch({
+		 	type: "ADD_PIECE",
+		 	payload: {
+		 		piece: {
+		 			id: "bb0",
+		 			name: "bb",
+		 			x: 2,
+		 			y: 0,
+		 			xOffset: 0,
+		 			yOffset: 0,
+		 			moved: false,
+		 			firstMove: true,
+		 		},
+		 	},
+		 });
+		 dispatch({
+		 	type: "ADD_PIECE",
+		 	payload: {
+		 		piece: {
+		 			id: "bq0",
+		 			name: "bq",
+		 			x: 3,
+		 			y: 0,
+		 			xOffset: 0,
+		 			yOffset: 0,
+		 			moved: false,
+		 			firstMove: true,
+		 		},
+		 	},
+		 });
 		dispatch({
 			type: "ADD_PIECE",
 			payload: {
@@ -401,51 +401,51 @@ export function Board() {
 				},
 			},
 		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wn0",
-					name: "wn",
-					x: 1,
-					y: 7,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wb0",
-					name: "wb",
-					x: 2,
-					y: 7,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wq0",
-					name: "wq",
-					x: 3,
-					y: 7,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
+		 dispatch({
+		 	type: "ADD_PIECE",
+		 	payload: {
+		 		piece: {
+		 			id: "wn0",
+		 			name: "wn",
+		 			x: 1,
+		 			y: 7,
+		 			xOffset: 0,
+		 			yOffset: 0,
+		 			moved: false,
+		 			firstMove: true,
+		 		},
+		 	},
+		 });
+		 dispatch({
+		 	type: "ADD_PIECE",
+		 	payload: {
+		 		piece: {
+		 			id: "wb0",
+		 			name: "wb",
+		 			x: 2,
+		 			y: 7,
+		 			xOffset: 0,
+		 			yOffset: 0,
+		 			moved: false,
+		 			firstMove: true,
+		 		},
+		 	},
+		 });
+		 dispatch({
+		 	type: "ADD_PIECE",
+		 	payload: {
+		 		piece: {
+		 			id: "wq0",
+		 			name: "wq",
+		 			x: 3,
+		 			y: 7,
+		 			xOffset: 0,
+		 			yOffset: 0,
+		 			moved: false,
+		 			firstMove: true,
+		 		},
+		 	},
+		 });
 		dispatch({
 			type: "ADD_PIECE",
 			payload: {
@@ -461,36 +461,36 @@ export function Board() {
 				},
 			},
 		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wb1",
-					name: "wb",
-					x: 5,
-					y: 7,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wn1",
-					name: "wn",
-					x: 6,
-					y: 7,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
+		 dispatch({
+		 	type: "ADD_PIECE",
+		 	payload: {
+		 		piece: {
+		 			id: "wb1",
+		 			name: "wb",
+		 			x: 5,
+		 			y: 7,
+		 			xOffset: 0,
+		 			yOffset: 0,
+		 			moved: false,
+		 			firstMove: true,
+		 		},
+		 	},
+		 });
+		 dispatch({
+		 	type: "ADD_PIECE",
+		 	payload: {
+		 		piece: {
+		 			id: "wn1",
+		 			name: "wn",
+		 			x: 6,
+		 			y: 7,
+		 			xOffset: 0,
+		 			yOffset: 0,
+		 			moved: false,
+		 			firstMove: true,
+		 		},
+		 	},
+		 });
 		dispatch({
 			type: "ADD_PIECE",
 			payload: {

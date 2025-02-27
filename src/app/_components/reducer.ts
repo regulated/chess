@@ -56,6 +56,9 @@ export const reducer = (state: Board, action: Action) => {
 	function setPieceToSquare(piece: Piece, squares: Squares) {
 		const next = [...squares];
 		next[piece.y][piece.x] = piece.id;
+		console.log("piece.y = ", piece.y);
+		console.log("piece.x = ", piece.x);
+		console.log("piece.id = ", piece.id);
 		return next;
 	}
 
@@ -226,6 +229,32 @@ export const reducer = (state: Board, action: Action) => {
 				break;
 
 			case "bk":
+				if (
+					Math.abs(piece.x - point.x) <= 1 &&
+					Math.abs(piece.y - point.y) <= 1
+				)
+					valid = true;
+
+				else if (piece.y == point.y 
+						&& piece.x == point.x + 2
+						&& state.blackQueensideCastling
+						&& squares[0][1] == ""
+						&& squares[0][2] == ""
+						&& squares[0][3] == "") { // left castle
+					valid = true;
+				}
+
+				else if (piece.y == point.y 
+						&& piece.x == point.x - 2
+						&& state.blackKingsideCastling
+						&& squares[0][5] == ""
+						&& squares[0][6] == ""
+					) { // right castle
+					valid = true;
+				}
+
+				break;
+
 			case "wk":
 				if (
 					Math.abs(piece.x - point.x) <= 1 &&
@@ -233,31 +262,24 @@ export const reducer = (state: Board, action: Action) => {
 				)
 					valid = true;
 
-				// Castling
-				/*
-				if (
-					// check kings first move
-					(piece.firstMove &&
-						// check not in check
-
-						//check left rook
-						piece.x - point.x === -2 &&
-						// rooks first move
-						squares[piece.y][piece.x - 1] === "" &&
-						squares[piece.y][piece.x - 2] === "" &&
-						squares[piece.y][piece.x - 3] === "") ||
-						// squares[piece.y][piece.x - 4] === '' &&
-					//check right rook
-					(piece.x - point.x === 2 &&
-						// rooks first move
-						squares[piece.y][piece.x + 1] === "" &&
-						squares[piece.y][piece.x + 2] === "")
-					// squares[piece.y][piece.x + 3] === '' &&
-				) {
-					// move rook one to left / right of original king location
+				else if (piece.y == point.y 
+						&& piece.x == point.x + 2
+						&& state.whiteQueensideCastling
+						&& squares[7][1] == ""
+						&& squares[7][2] == ""
+						&& squares[7][3] == "") { // left castle
 					valid = true;
 				}
-				*/
+
+				else if (piece.y == point.y 
+						&& piece.x == point.x - 2
+						&& state.whiteKingsideCastling
+						&& squares[7][5] == ""
+						&& squares[7][6] == ""
+					) { // right castle
+					valid = true;
+				}
+
 
 				break;
 
@@ -440,6 +462,155 @@ export const reducer = (state: Board, action: Action) => {
 			const nextState = { ...state };
 			const { piece, point } = action.payload;
 
+			// check for castling (move king and rook)
+			if (nextState.blackQueensideCastling && 
+					piece.name === "bk" &&
+					piece.x - point.x === 2) {
+
+
+					const rookIndex = nextState.pieces.findIndex((i) => i.id === "br0");
+					const rook = nextState.pieces[rookIndex];
+					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
+
+					piece.x = point.x;
+					piece.y = point.y;
+					piece.firstMove = false;
+
+					rook.x = 3;
+					rook.y = rook.y;
+					rook.firstMove = false;
+
+					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+					nextState.squares = clearPieceFromSquare(nextState.pieces[rookIndex], nextState.squares);
+
+					nextState.whiteTurn = !nextState.whiteTurn;
+					if (nextState.whiteTurn) nextState.fullTurns += 1;
+					nextState.halfTurns += 1;
+
+					nextState.pieces[index] = piece;
+					nextState.pieces[rookIndex] = rook;
+
+					nextState.squares = setPieceToSquare(piece, nextState.squares);
+					nextState.squares = setPieceToSquare(rook, nextState.squares);
+
+          nextState.blackKingsideCastling = false;
+          nextState.blackQueensideCastling = false;
+
+					return nextState;
+
+			}
+
+			else if (nextState.blackKingsideCastling && 
+					piece.name === "bk" &&
+					point.x - piece.x === 2) {
+
+					const rookIndex = nextState.pieces.findIndex((i) => i.id === "br1");
+					const rook = nextState.pieces[rookIndex];
+					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
+
+					piece.x = point.x;
+					piece.y = point.y;
+					piece.firstMove = false;
+
+					rook.x = 5;
+					rook.y = rook.y;
+					rook.firstMove = false;
+
+					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+					nextState.squares = clearPieceFromSquare(nextState.pieces[rookIndex], nextState.squares);
+
+					nextState.whiteTurn = !nextState.whiteTurn;
+					if (nextState.whiteTurn) nextState.fullTurns += 1;
+					nextState.halfTurns += 1;
+
+					nextState.pieces[index] = piece;
+					nextState.pieces[rookIndex] = rook;
+
+					nextState.squares = setPieceToSquare(piece, nextState.squares);
+					nextState.squares = setPieceToSquare(rook, nextState.squares);
+
+          nextState.blackKingsideCastling = false;
+          nextState.blackQueensideCastling = false;
+
+					return nextState;
+
+			}
+
+			else if (nextState.whiteQueensideCastling && 
+					piece.name === "wk" &&
+				  piece.x - point.x === 2) {
+
+					const rookIndex = nextState.pieces.findIndex((i) => i.id === "wr0");
+					const rook = nextState.pieces[rookIndex];
+					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
+
+					piece.x = point.x;
+					piece.y = point.y;
+					piece.firstMove = false;
+
+					rook.x = 3;
+					rook.y = rook.y;
+					rook.firstMove = false;
+
+					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+					nextState.squares = clearPieceFromSquare(nextState.pieces[rookIndex], nextState.squares);
+
+					nextState.whiteTurn = !nextState.whiteTurn;
+					if (nextState.whiteTurn) nextState.fullTurns += 1;
+					nextState.halfTurns += 1;
+
+					nextState.pieces[index] = piece;
+					nextState.pieces[rookIndex] = rook;
+
+					nextState.squares = setPieceToSquare(piece, nextState.squares);
+					nextState.squares = setPieceToSquare(rook, nextState.squares);
+
+          nextState.whiteKingsideCastling = false;
+          nextState.whiteQueensideCastling = false;
+
+					return nextState;
+
+
+			}
+
+			else if (nextState.whiteKingsideCastling && 
+					piece.name === "wk" &&
+					point.x - piece.x === 2) {
+					const rookIndex = nextState.pieces.findIndex((i) => i.id === "wr1");
+					const rook = nextState.pieces[rookIndex];
+					const index = nextState.pieces.findIndex((i) => i.id === piece.id);
+
+					piece.x = point.x;
+					piece.y = point.y;
+					piece.firstMove = false;
+
+					rook.x = 5;
+					rook.y = rook.y;
+					rook.firstMove = false;
+
+					nextState.squares = clearPieceFromSquare(piece, nextState.squares);
+					nextState.squares = clearPieceFromSquare(nextState.pieces[rookIndex], nextState.squares);
+
+					nextState.whiteTurn = !nextState.whiteTurn;
+					if (nextState.whiteTurn) nextState.fullTurns += 1;
+					nextState.halfTurns += 1;
+
+					nextState.pieces[index] = piece;
+					nextState.pieces[rookIndex] = rook;
+
+					nextState.squares = setPieceToSquare(piece, nextState.squares);
+					nextState.squares = setPieceToSquare(rook, nextState.squares);
+
+          nextState.whiteKingsideCastling = false;
+          nextState.whiteQueensideCastling = false;
+
+					return nextState;
+
+			}
+
+
+
+
 			nextState.squares = clearPieceFromSquare(piece, nextState.squares);
 
 			// check if there is a piece on that square already
@@ -481,7 +652,6 @@ export const reducer = (state: Board, action: Action) => {
 			if (piece.name === "wp" && piece.y === 0) piece.name = "wq";
 			if (piece.name === "bp" && piece.y === 7) piece.name = "bq";
 
-			// check for castling (move king and rook)
 			
 			// set castling to false if rook or king has moved
 			if (piece.id === "br0") nextState.blackQueensideCastling = false; 
