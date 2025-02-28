@@ -1,8 +1,7 @@
-Castling
-Set a check for King and Rooks to see if they've moved
-Distinguish b/w left and right rook
 
-!!IMPORTANT
+TODO
+backwards and forward buttons
+
 PGN
 New page
 Import a pgn from lichess.org
@@ -17,5 +16,3 @@ game session, users, player ids, save games, evaluate position with stockfish
 
 Current Idea
 Lichess game, and implement an eval bar based on current game state
-backwards and forward buttons
-

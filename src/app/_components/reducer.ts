@@ -240,7 +240,7 @@ export const reducer = (state: Board, action: Action) => {
 				}
 
         // right castle
-				else if (piece.y == point.y 
+				else if (piece.y == point.y
 						&& piece.x == point.x - 2
 						&& state.blackKingsideCastling
 						&& squares[0][5] == ""
@@ -258,21 +258,21 @@ export const reducer = (state: Board, action: Action) => {
 					valid = true;
 
         // left castle
-				else if (piece.y == point.y 
+				else if (piece.y == point.y
 						&& piece.x == point.x + 2
 						&& state.whiteQueensideCastling
 						&& squares[7][1] == ""
 						&& squares[7][2] == ""
-						&& squares[7][3] == "") { 
+						&& squares[7][3] == "") {
 					valid = true;
 				}
 
         // right castle
-				else if (piece.y == point.y 
+				else if (piece.y == point.y
 						&& piece.x == point.x - 2
 						&& state.whiteKingsideCastling
 						&& squares[7][5] == ""
-						&& squares[7][6] == "") { 
+						&& squares[7][6] == "") {
 					valid = true;
 				}
 
@@ -296,9 +296,9 @@ export const reducer = (state: Board, action: Action) => {
 				if (
 					Math.abs(piece.x - point.x) === 1 &&
 					piece.y - 1 === point.y &&
-					(squares[point.y][point.x].startsWith("b") || 
-						(eps !== '' && 
-							(eps.charCodeAt(0) - 97) === point.x && 
+					(squares[point.y][point.x].startsWith("b") ||
+						(eps !== '' &&
+							(eps.charCodeAt(0) - 97) === point.x &&
 							(8 - Number(eps.charAt(1))) === point.y))
 				)
 					valid = true;
@@ -324,8 +324,8 @@ export const reducer = (state: Board, action: Action) => {
 					Math.abs(piece.x - point.x) === 1 &&
 					piece.y + 1 === point.y &&
 					(squares[point.y][point.x].startsWith("w") ||
-						(eps !== '' 
-							&& (eps.charCodeAt(0) - 97) === point.x 
+						(eps !== ''
+							&& (eps.charCodeAt(0) - 97) === point.x
 							&& (8 - Number(eps.charAt(1))) === point.y))
 				)
 					valid = true;
@@ -401,7 +401,7 @@ export const reducer = (state: Board, action: Action) => {
 		case "CLEAR_BOARD": {
 			const nextState = { ...state };
 
-			nextState.pieces.length = 0; // = [];
+			nextState.pieces.length = 0;
 			for (let y = 0; y <= 7; y++) {
 				for (let x = 0; x <= 7; x++) {
 					nextState.squares[y][x] = "";
@@ -411,7 +411,7 @@ export const reducer = (state: Board, action: Action) => {
 			nextState.dragging = undefined;
 			nextState.whiteTurn = true;
 			nextState.halfTurns = 0;
-			nextState.fullTurns = 1; 
+			nextState.fullTurns = 1;
 			nextState.enPassantSquare = '';
 			nextState.blackKingsideCastling = true;
 			nextState.blackQueensideCastling = true;
@@ -454,7 +454,7 @@ export const reducer = (state: Board, action: Action) => {
 			const { piece, point } = action.payload;
 
 			// check for castling (move king and rook)
-			if (nextState.blackQueensideCastling && 
+			if (nextState.blackQueensideCastling &&
 					piece.name === "bk" &&
 					piece.x - point.x === 2) {
 
@@ -488,7 +488,7 @@ export const reducer = (state: Board, action: Action) => {
 					return nextState;
 			}
 
-			else if (nextState.blackKingsideCastling && 
+			else if (nextState.blackKingsideCastling &&
 					piece.name === "bk" &&
 					point.x - piece.x === 2) {
 
@@ -522,7 +522,7 @@ export const reducer = (state: Board, action: Action) => {
 					return nextState;
 			}
 
-			else if (nextState.whiteQueensideCastling && 
+			else if (nextState.whiteQueensideCastling &&
 					piece.name === "wk" &&
 				  piece.x - point.x === 2) {
 
@@ -557,7 +557,7 @@ export const reducer = (state: Board, action: Action) => {
 					return nextState;
 			}
 
-			else if (nextState.whiteKingsideCastling && 
+			else if (nextState.whiteKingsideCastling &&
 					piece.name === "wk" &&
 					point.x - piece.x === 2) {
 
@@ -606,7 +606,7 @@ export const reducer = (state: Board, action: Action) => {
 
 			// check if the square is the enPassantSquare
 			// if so remove the pawn in front of the square
-			if (point.x === (nextState.enPassantSquare.charCodeAt(0) - 97) && 
+			if (point.x === (nextState.enPassantSquare.charCodeAt(0) - 97) &&
 					point.y === (8 - Number(nextState.enPassantSquare.charAt(1)))) {
 				const ind = nextState.pieces.findIndex(
 					(p) => p.x === point.x && (p.y === point.y + 1 || p.y === point.y - 1),
@@ -617,11 +617,11 @@ export const reducer = (state: Board, action: Action) => {
 			// if a pawn moved reset half turn counter
 			if (piece.name.charAt(1) === 'p') nextState.halfTurns = -1;
 
-			// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
+			// if a pawn moved two squares, set the square behind it as the enPassantSquare,
 			// else clear enPassantSquare
 			nextState.enPassantSquare = '';
 			if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
-				nextState.enPassantSquare = 
+				nextState.enPassantSquare =
 					String.fromCharCode(piece.x + 97) + (8 - (piece.y + point.y) / 2).toString();
 			}
 			
@@ -635,17 +635,17 @@ export const reducer = (state: Board, action: Action) => {
 
 			
 			// set castling to false if rook or king has moved
-			if (piece.id === "br0") nextState.blackQueensideCastling = false; 
-			if (piece.id === "br1") nextState.blackKingsideCastling = false; 
-			if (piece.id === "wr0") nextState.whiteQueensideCastling = false; 
-			if (piece.id === "wr1") nextState.whiteKingsideCastling = false; 
+			if (piece.id === "br0") nextState.blackQueensideCastling = false;
+			if (piece.id === "br1") nextState.blackKingsideCastling = false;
+			if (piece.id === "wr0") nextState.whiteQueensideCastling = false;
+			if (piece.id === "wr1") nextState.whiteKingsideCastling = false;
 			if (piece.name === "bk") {
-				nextState.blackQueensideCastling = false; 
-				nextState.blackKingsideCastling = false; 
+				nextState.blackQueensideCastling = false;
+				nextState.blackKingsideCastling = false;
 			}
 			if (piece.name === "wk") {
-				nextState.whiteQueensideCastling = false; 
-				nextState.whiteKingsideCastling = false; 
+				nextState.whiteQueensideCastling = false;
+				nextState.whiteKingsideCastling = false;
 			}
 
 			nextState.whiteTurn = !nextState.whiteTurn;
@@ -718,7 +718,7 @@ export const reducer = (state: Board, action: Action) => {
 				}
 
         // check for castling (move king and rook)
-        if (nextState.blackQueensideCastling && 
+        if (nextState.blackQueensideCastling &&
           piece.name === "bk" &&
           piece.x - point.x === 2) {
 
@@ -755,7 +755,7 @@ export const reducer = (state: Board, action: Action) => {
           return nextState;
         }
 
-        else if (nextState.blackKingsideCastling && 
+        else if (nextState.blackKingsideCastling &&
           piece.name === "bk" &&
           point.x - piece.x === 2) {
 
@@ -792,7 +792,7 @@ export const reducer = (state: Board, action: Action) => {
           return nextState;
         }
 
-        else if (nextState.whiteQueensideCastling && 
+        else if (nextState.whiteQueensideCastling &&
           piece.name === "wk" &&
           piece.x - point.x === 2) {
 
@@ -830,7 +830,7 @@ export const reducer = (state: Board, action: Action) => {
           return nextState;
         }
 
-        else if (nextState.whiteKingsideCastling && 
+        else if (nextState.whiteKingsideCastling &&
           piece.name === "wk" &&
           point.x - piece.x === 2) {
 
@@ -880,7 +880,7 @@ export const reducer = (state: Board, action: Action) => {
 
 				// check if the square is the enPassantSquare
 				// if so remove the pawn in front of the square
-				if (point.x === (nextState.enPassantSquare.charCodeAt(0) - 97) && 
+				if (point.x === (nextState.enPassantSquare.charCodeAt(0) - 97) &&
 						point.y === (8 - Number(nextState.enPassantSquare.charAt(1)))) {
 					const ind = nextState.pieces.findIndex(
 						(p) => p.x === point.x && (p.y === point.y + 1 || p.y === point.y - 1),
@@ -890,11 +890,11 @@ export const reducer = (state: Board, action: Action) => {
 
 				nextState.squares = clearPieceFromSquare(piece, nextState.squares);
 
-				// if a pawn moved two squares, set the square behind it as the enPassantSquare, 
+				// if a pawn moved two squares, set the square behind it as the enPassantSquare,
 				// else clear enPassantSquare
 				nextState.enPassantSquare = '';
 				if (piece.name.charAt(1) === 'p' && Math.abs(point.y - piece.y) === 2) {
-					nextState.enPassantSquare = 
+					nextState.enPassantSquare =
 						String.fromCharCode(piece.x + 97) + (8 - (piece.y + point.y) / 2).toString();
 				}
 
@@ -915,17 +915,17 @@ export const reducer = (state: Board, action: Action) => {
 
 			
         // set castling to false if rook or king has moved
-        if (piece.id === "br0") nextState.blackQueensideCastling = false; 
-        if (piece.id === "br1") nextState.blackKingsideCastling = false; 
-        if (piece.id === "wr0") nextState.whiteQueensideCastling = false; 
-        if (piece.id === "wr1") nextState.whiteKingsideCastling = false; 
+        if (piece.id === "br0") nextState.blackQueensideCastling = false;
+        if (piece.id === "br1") nextState.blackKingsideCastling = false;
+        if (piece.id === "wr0") nextState.whiteQueensideCastling = false;
+        if (piece.id === "wr1") nextState.whiteKingsideCastling = false;
         if (piece.name === "bk") {
-          nextState.blackQueensideCastling = false; 
-          nextState.blackKingsideCastling = false; 
+          nextState.blackQueensideCastling = false;
+          nextState.blackKingsideCastling = false;
         }
         if (piece.name === "wk") {
-          nextState.whiteQueensideCastling = false; 
-          nextState.whiteKingsideCastling = false; 
+          nextState.whiteQueensideCastling = false;
+          nextState.whiteKingsideCastling = false;
         }
 
 				nextState.squares = setPieceToSquare(piece, nextState.squares);
