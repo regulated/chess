@@ -23,489 +23,36 @@ export function Board() {
 
 	const [clear, setClear] = useState(false);
 
+  const pieceIDs = ['br0','bn0','bb0','bq0','bk0','bb1','bn1','br1',
+                    'bp0','bp1','bp2','bp3','bp4','bp5','bp6','bp7',
+                    'wp0','wp1','wp2','wp3','wp4','wp5','wp6','wp7',
+                    'wr0','wn0','wb0','wq0','wk0','wb1','wn1','wr1',];
+
 	useEffect(() => {
 	
 		dispatch({ type: "CLEAR_BOARD" });
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "br0",
-					name: "br",
-					x: 0,
-					y: 0,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		 dispatch({
-		 	type: "ADD_PIECE",
-		 	payload: {
-		 		piece: {
-		 			id: "bn0",
-		 			name: "bn",
-		 			x: 1,
-		 			y: 0,
-		 			xOffset: 0,
-		 			yOffset: 0,
-		 			moved: false,
-		 			firstMove: true,
-		 		},
-		 	},
-		 });
-		 dispatch({
-		 	type: "ADD_PIECE",
-		 	payload: {
-		 		piece: {
-		 			id: "bb0",
-		 			name: "bb",
-		 			x: 2,
-		 			y: 0,
-		 			xOffset: 0,
-		 			yOffset: 0,
-		 			moved: false,
-		 			firstMove: true,
-		 		},
-		 	},
-		 });
-		 dispatch({
-		 	type: "ADD_PIECE",
-		 	payload: {
-		 		piece: {
-		 			id: "bq0",
-		 			name: "bq",
-		 			x: 3,
-		 			y: 0,
-		 			xOffset: 0,
-		 			yOffset: 0,
-		 			moved: false,
-		 			firstMove: true,
-		 		},
-		 	},
-		 });
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bk0",
-					name: "bk",
-					x: 4,
-					y: 0,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bb1",
-					name: "bb",
-					x: 5,
-					y: 0,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bn1",
-					name: "bn",
-					x: 6,
-					y: 0,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "br1",
-					name: "br",
-					x: 7,
-					y: 0,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bp0",
-					name: "bp",
-					x: 0,
-					y: 1,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bp1",
-					name: "bp",
-					x: 1,
-					y: 1,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bp2",
-					name: "bp",
-					x: 2,
-					y: 1,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bp3",
-					name: "bp",
-					x: 3,
-					y: 1,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bp4",
-					name: "bp",
-					x: 4,
-					y: 1,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bp5",
-					name: "bp",
-					x: 5,
-					y: 1,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bp6",
-					name: "bp",
-					x: 6,
-					y: 1,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "bp7",
-					name: "bp",
-					x: 7,
-					y: 1,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wp0",
-					name: "wp",
-					x: 0,
-					y: 6,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wp1",
-					name: "wp",
-					x: 1,
-					y: 6,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wp2",
-					name: "wp",
-					x: 2,
-					y: 6,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wp3",
-					name: "wp",
-					x: 3,
-					y: 6,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wp4",
-					name: "wp",
-					x: 4,
-					y: 6,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wp5",
-					name: "wp",
-					x: 5,
-					y: 6,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wp6",
-					name: "wp",
-					x: 6,
-					y: 6,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wp7",
-					name: "wp",
-					x: 7,
-					y: 6,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wr0",
-					name: "wr",
-					x: 0,
-					y: 7,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		 dispatch({
-		 	type: "ADD_PIECE",
-		 	payload: {
-		 		piece: {
-		 			id: "wn0",
-		 			name: "wn",
-		 			x: 1,
-		 			y: 7,
-		 			xOffset: 0,
-		 			yOffset: 0,
-		 			moved: false,
-		 			firstMove: true,
-		 		},
-		 	},
-		 });
-		 dispatch({
-		 	type: "ADD_PIECE",
-		 	payload: {
-		 		piece: {
-		 			id: "wb0",
-		 			name: "wb",
-		 			x: 2,
-		 			y: 7,
-		 			xOffset: 0,
-		 			yOffset: 0,
-		 			moved: false,
-		 			firstMove: true,
-		 		},
-		 	},
-		 });
-		 dispatch({
-		 	type: "ADD_PIECE",
-		 	payload: {
-		 		piece: {
-		 			id: "wq0",
-		 			name: "wq",
-		 			x: 3,
-		 			y: 7,
-		 			xOffset: 0,
-		 			yOffset: 0,
-		 			moved: false,
-		 			firstMove: true,
-		 		},
-		 	},
-		 });
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wk0",
-					name: "wk",
-					x: 4,
-					y: 7,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
-		 dispatch({
-		 	type: "ADD_PIECE",
-		 	payload: {
-		 		piece: {
-		 			id: "wb1",
-		 			name: "wb",
-		 			x: 5,
-		 			y: 7,
-		 			xOffset: 0,
-		 			yOffset: 0,
-		 			moved: false,
-		 			firstMove: true,
-		 		},
-		 	},
-		 });
-		 dispatch({
-		 	type: "ADD_PIECE",
-		 	payload: {
-		 		piece: {
-		 			id: "wn1",
-		 			name: "wn",
-		 			x: 6,
-		 			y: 7,
-		 			xOffset: 0,
-		 			yOffset: 0,
-		 			moved: false,
-		 			firstMove: true,
-		 		},
-		 	},
-		 });
-		dispatch({
-			type: "ADD_PIECE",
-			payload: {
-				piece: {
-					id: "wr1",
-					name: "wr",
-					x: 7,
-					y: 7,
-					xOffset: 0,
-					yOffset: 0,
-					moved: false,
-					firstMove: true,
-				},
-			},
-		});
+
+    for (let i = 0; i < 32; i++) {
+      dispatch({
+        type: "ADD_PIECE",
+        payload: {
+          piece: {
+            id: pieceIDs[i],
+            name: pieceIDs[i].substring(0,2),
+            x: (i % 8),
+            y: (i < 8) ? 0
+              : (i < 16) ? 1
+              : (i < 24) ? 6
+              : 7,
+            xOffset: 0,
+            yOffset: 0,
+            moved: false,
+            firstMove: true,
+          },
+        },
+      });
+    }
+
 	}, [clear]);
 
 	const windowOffsetX = useScreenSize().width / 2 - 192;
@@ -566,10 +113,6 @@ export function Board() {
 		fetchData()
 			.catch((error) => {console.log(error)}); 
 	}, [state.whiteTurn])
-
-	// useEffect(() => {
-	// 	setStates(state)		
-	// }, [state.whiteTurn])
 
 	return (
 		<>
@@ -774,15 +317,13 @@ export function Board() {
 						></motion.img>
 					);
 				})}
-				{//<div className="absolute -mt-10 ml-12 w-24 grid place-items-center gap-6 grid-cols-3">
-				// was working on the outside of the div, trying to move it inside the wrapper now
-			}
 				<div className={footer}>
 					<Button
 						color="primary"
 						onClick={() => {
-							onReset();
-							setClear(!clear);
+              dispatch({ type: "MOVE_STATE"});
+							// onReset();
+							// setClear(!clear);
 						}}
 					>
 						Reset
@@ -791,7 +332,7 @@ export function Board() {
 						Best Move: {move}
 					</p>
 					<p className="text-white">
-					Eval: {evl}
+            Eval: {evl}
 					</p>
 				</div>
 				<div className={evalWrapper}>

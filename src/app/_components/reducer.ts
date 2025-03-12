@@ -27,6 +27,7 @@ export const initial: Board = {
 	whiteTurn: true,
 	halfTurns: 0,
 	fullTurns: 1,
+  turns: 0,
   blackKingsideCastling: true,
   blackQueensideCastling: true,
   whiteKingsideCastling: true,
@@ -44,9 +45,17 @@ export type Action =
 	| { type: "DRAG_ENDED"; payload: { piece: Piece; offset: Point } }
 	| { type: "ANIMATION_ENDED" }
 	| { type: "CHECKMATE" }
-	| { type: "MOVE_STATE"}; // payload: { board: Board } };
+	| { type: "MOVE_STATE"};
+
+const boards: Board[] = [initial];
 
 export const reducer = (state: Board, action: Action) => {
+
+  boards[state.turns] = { ...state };
+  console.log(state.turns);
+
+  console.log(boards);
+
 	function clearPieceFromSquare(piece: Piece, squares: Squares) {
 		const next = [...squares];
 		next[piece.y][piece.x] = "";
@@ -66,41 +75,6 @@ export const reducer = (state: Board, action: Action) => {
 		depth: number,
 		eps: string,
 	) {
-		/*
-		 * check that it is the right side's turn
-		 * check that the piece moved
-		 * check that move is in bounds of piece type and board
-		 * check that there isn't a piece in the way
-		 * check that if there is a piece on destination it is the opposite color
-		 * check that the move doesn't result in own check (new or existing)
-		 * check for pawn promotion (doing this after move has been made)
-		 * 	if pawn hits end rank, for now just auto queen, piece.name = "xq"
-		 */
-
-		/*
-		 * Idea for check:
-		 * have a subfunction that checks for each piece in resulting position
-		 * if either king is in check
-		 * if opposite king: create an incheck state that must be gotten rid of
-		 * 	just continuing would work here bc the invalid check will take care
-		 * 	of this situation on the next player's turn
-		 * if current king: return invalid
-		 * */
-
-		/*
-		 * Castling
-		 * Check that the king and the rook on required side have not moved
-		 * check that there are no pieces b/w the king and the rook
-		 * once check is enabled, make sure the king does not pass through check when castling
-		 * */
-
-		/*
-		 * en passant
-		 * check that wp is on 5th rank (3) or bp is on 4th rank (4)
-		 * check that the opposite color pawn is directly to the side
-		 * check that that specific pawn just moved there in two moves
-		 * capture diagonally and remove the pawn to the side
-		 * */
 
 		let valid = false;
 
@@ -412,6 +386,7 @@ export const reducer = (state: Board, action: Action) => {
 			nextState.whiteTurn = true;
 			nextState.halfTurns = 0;
 			nextState.fullTurns = 1;
+			nextState.turns = 0;
 			nextState.enPassantSquare = '';
 			nextState.blackKingsideCastling = true;
 			nextState.blackQueensideCastling = true;
@@ -475,6 +450,7 @@ export const reducer = (state: Board, action: Action) => {
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
 					nextState.halfTurns += 1;
+          nextState.turns++;
 
 					nextState.pieces[index] = piece;
 					nextState.pieces[rookIndex] = rook;
@@ -509,6 +485,7 @@ export const reducer = (state: Board, action: Action) => {
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
 					nextState.halfTurns += 1;
+          nextState.turns++;
 
 					nextState.pieces[index] = piece;
 					nextState.pieces[rookIndex] = rook;
@@ -544,6 +521,7 @@ export const reducer = (state: Board, action: Action) => {
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
 					nextState.halfTurns += 1;
+          nextState.turns++;
 
 					nextState.pieces[index] = piece;
 					nextState.pieces[rookIndex] = rook;
@@ -579,6 +557,7 @@ export const reducer = (state: Board, action: Action) => {
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
 					nextState.halfTurns += 1;
+          nextState.turns++;
 
 					nextState.pieces[index] = piece;
 					nextState.pieces[rookIndex] = rook;
@@ -651,6 +630,7 @@ export const reducer = (state: Board, action: Action) => {
 			nextState.whiteTurn = !nextState.whiteTurn;
 			if (nextState.whiteTurn) nextState.fullTurns += 1;
 			nextState.halfTurns += 1;
+      nextState.turns++;
 
 			const index = nextState.pieces.findIndex((i) => i.id === piece.id);
 			nextState.pieces[index] = piece;
@@ -700,6 +680,7 @@ export const reducer = (state: Board, action: Action) => {
 					nextState.whiteTurn = !nextState.whiteTurn;
 					if (nextState.whiteTurn) nextState.fullTurns += 1;
 					nextState.halfTurns += 1;
+          nextState.turns++;
 					return nextState;
 				}
 				if (piece.moved && !valid) {
@@ -742,6 +723,7 @@ export const reducer = (state: Board, action: Action) => {
           nextState.whiteTurn = !nextState.whiteTurn;
           if (nextState.whiteTurn) nextState.fullTurns += 1;
           nextState.halfTurns += 1;
+          nextState.turns++;
 
           nextState.pieces[index] = piece;
           nextState.pieces[rookIndex] = rook;
@@ -779,6 +761,7 @@ export const reducer = (state: Board, action: Action) => {
           nextState.whiteTurn = !nextState.whiteTurn;
           if (nextState.whiteTurn) nextState.fullTurns += 1;
           nextState.halfTurns += 1;
+          nextState.turns++;
 
           nextState.pieces[index] = piece;
           nextState.pieces[rookIndex] = rook;
@@ -817,6 +800,7 @@ export const reducer = (state: Board, action: Action) => {
           nextState.whiteTurn = !nextState.whiteTurn;
           if (nextState.whiteTurn) nextState.fullTurns += 1;
           nextState.halfTurns += 1;
+          nextState.turns++;
 
           nextState.pieces[index] = piece;
           nextState.pieces[rookIndex] = rook;
@@ -855,6 +839,7 @@ export const reducer = (state: Board, action: Action) => {
           nextState.whiteTurn = !nextState.whiteTurn;
           if (nextState.whiteTurn) nextState.fullTurns += 1;
           nextState.halfTurns += 1;
+          nextState.turns++;
 
           nextState.pieces[index] = piece;
           nextState.pieces[rookIndex] = rook;
@@ -936,6 +921,7 @@ export const reducer = (state: Board, action: Action) => {
 				nextState.whiteTurn = !nextState.whiteTurn;
 				if (nextState.whiteTurn) nextState.fullTurns += 1;
 				nextState.halfTurns += 1;
+        nextState.turns++;
 
 				return nextState;
 			}
@@ -976,12 +962,12 @@ export const reducer = (state: Board, action: Action) => {
 			return state;
 		}
 
-		// case "MOVE_STATE": {
-		// 	const diffState =  { ...action.payload };
+		case "MOVE_STATE": {
+      const nextState = boards[state.turns - 1];
 
-		// 	return diffState;
+			return nextState;
 			
-		// }
+		}
 
 		default: {
 			return state;

@@ -35,11 +35,14 @@ export type Board = {
   whiteTurn: boolean;
 	halfTurns: number;
 	fullTurns: number;
+  turns: number;
   blackKingsideCastling: boolean;
   blackQueensideCastling: boolean;
   whiteKingsideCastling: boolean;
   whiteQueensideCastling: boolean;
 };
+
+// export type Boards = Board[];
 
 // dom location
 export type Point = { x: number; y: number };
