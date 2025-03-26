@@ -77,7 +77,7 @@ export function Board() {
 		})
 	}
 
-  const handleKeyPress = e => {
+  const handleKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'ArrowLeft') {
       dispatch({ type: "MOVE_BACK"});
     }
