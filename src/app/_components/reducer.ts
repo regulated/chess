@@ -45,16 +45,24 @@ export type Action =
 	| { type: "DRAG_ENDED"; payload: { piece: Piece; offset: Point } }
 	| { type: "ANIMATION_ENDED" }
 	| { type: "CHECKMATE" }
-	| { type: "MOVE_STATE"};
+	| { type: "MOVE_BACK"}
+	| { type: "MOVE_FORWARD"};
 
-const boards: Board[] = [initial];
+let boards: Board[];
 
 export const reducer = (state: Board, action: Action) => {
 
-  boards[state.turns] = { ...state };
-  console.log(state.turns);
+  if (state.turns === 0) {
+    const fistBoard = JSON.parse(JSON.stringify(state));
+    boards = [{ ...fistBoard}];
+  }
 
-  console.log(boards);
+  if (state.turns === boards.length) {
+    const oldBoards = JSON.parse(JSON.stringify(boards));
+    const nextState = JSON.parse(JSON.stringify(state));
+    boards = [ ...oldBoards,
+      { ...nextState}];
+  }
 
 	function clearPieceFromSquare(piece: Piece, squares: Squares) {
 		const next = [...squares];
@@ -962,8 +970,19 @@ export const reducer = (state: Board, action: Action) => {
 			return state;
 		}
 
-		case "MOVE_STATE": {
-      const nextState = boards[state.turns - 1];
+		case "MOVE_BACK": {
+      const nextState = (state.turns - 1 >= 0) 
+        ? { ...boards[state.turns - 1]} 
+        : { ...boards[0] };
+
+			return nextState;
+			
+		}
+
+		case "MOVE_FORWARD": {
+      const nextState = (state.turns + 1 < boards.length ) 
+        ? { ...boards[state.turns + 1]} 
+        : { ...boards[state.turns] };
 
 			return nextState;
 			

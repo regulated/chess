@@ -77,6 +77,23 @@ export function Board() {
 		})
 	}
 
+  const handleKeyPress = e => {
+    if (e.key === 'ArrowLeft') {
+      dispatch({ type: "MOVE_BACK"});
+    }
+    else if (e.key === 'ArrowRight') {
+      dispatch({ type: "MOVE_FORWARD"});
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+
+    return function() {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
 	useEffect(() => {
 
 		if (format(state) === '8/8/8/8/8/8/8/8 w KQkq - 0 1') return;
@@ -321,12 +338,27 @@ export function Board() {
 					<Button
 						color="primary"
 						onClick={() => {
-              dispatch({ type: "MOVE_STATE"});
-							// onReset();
-							// setClear(!clear);
+              dispatch({ type: "MOVE_BACK"});
+						}}
+					>
+						Back
+					</Button>
+					<Button
+						color="danger"
+						onClick={() => {
+							onReset();
+							setClear(!clear);
 						}}
 					>
 						Reset
+					</Button>
+					<Button
+						color="primary"
+						onClick={() => {
+              dispatch({ type: "MOVE_FORWARD"});
+						}}
+					>
+						Forward
 					</Button>
 					<p className="text-white">
 						Best Move: {move}
@@ -338,8 +370,8 @@ export function Board() {
 				<div className={evalWrapper}>
 					<div className={evalBar}>
 						<div style={{
-							height: (whiteMate === 0) ? 
-								Math.min(Math.max((192 - (Number(evl) * 19)), 0), 384) : 
+							height: (whiteMate === 0) ?
+								Math.min(Math.max((192 - (Number(evl) * 19)), 0), 384) :
 								((whiteMate < 0) ? 384 : 0),
 							backgroundColor: "black",
 						}}>
