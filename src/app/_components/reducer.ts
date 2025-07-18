@@ -976,7 +976,6 @@ export const reducer = (state: Board, action: Action) => {
         : { ...boards[0] };
 
 			return nextState;
-			
 		}
 
 		case "MOVE_FORWARD": {
@@ -985,7 +984,6 @@ export const reducer = (state: Board, action: Action) => {
         : { ...boards[state.turns] };
 
 			return nextState;
-			
 		}
 
 		default: {

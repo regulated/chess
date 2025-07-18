@@ -9,6 +9,7 @@ import {
 	boardStyle,
 	wrapper,
 	footer,
+	footer2,
 	evalWrapper,
 	evalBar,
 } from "../../styles/boardStyles";
@@ -360,6 +361,8 @@ export function Board() {
 					>
 						Forward
 					</Button>
+        </div>
+				<div className={footer2}>
 					<p className="text-white">
 						Best Move: {move}
 					</p>
@@ -374,6 +377,7 @@ export function Board() {
 								Math.min(Math.max((192 - (Number(evl) * 19)), 0), 384) :
 								((whiteMate < 0) ? 384 : 0),
 							backgroundColor: "black",
+              borderRadius: "0.75rem",
 						}}>
 						</div>
 					</div>

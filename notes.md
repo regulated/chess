@@ -1,11 +1,7 @@
 
 TODO
-backwards and forward buttons
-  need to have a higher level object that contains 
-    an array of boards and can go back and forward
-  then need to map forward and back buttons to
-    keyboard
-    on screen buttons
+  Make back / forward motions work on drag
+  the offset of the pieces is not being reset in the state
 
 PGN
 New page
